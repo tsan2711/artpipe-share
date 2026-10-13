@@ -1,0 +1,15 @@
+# Sprite nhân vật / quái chibi toàn thân. Xem presets/cute-icons/icons.yaml để biết từng trường.
+# Tả: loài/nghề + 1 món đồ nhận diện + màu chủ đạo + biểu cảm. Một nhân vật mỗi dòng.
+icons:
+  # ── Quái ──
+  - { name: Slime,        subtype: slime, element: green }
+  - { name: Fire Slime,   prompt: "a round bouncy slime monster made of orange fire, big shiny eyes, cheeky grin", element: red }
+  - { name: Mushroom,     prompt: "a small walking mushroom monster with a red spotted cap and tiny feet, sleepy eyes" }
+  - { name: Bat,          prompt: "a round little bat monster with big ears and tiny wings spread, playful fangs", element: purple }
+  - { name: Ghost,        prompt: "a small floating ghost with a wavy tail and rosy cheeks, shy smile" }
+  # ── Nhân vật ──
+  - { name: Knight,       subtype: knight, element: blue }
+  - { name: Mage,         prompt: "a tiny mage girl with a big pointy hat and a star wand, purple robe", element: purple }
+  - { name: Archer,       prompt: "a tiny elf archer with a green hood and a small wooden bow", element: green }
+  - { name: Merchant,     prompt: "a chubby little merchant with a big backpack full of goods, friendly smile", element: gold }
+  - { name: Cat Pet,      prompt: "a round little cat pet sitting, orange fur, bell collar, happy closed eyes" }

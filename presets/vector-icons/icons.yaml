@@ -1,0 +1,13 @@
+# Icon kỹ năng phẳng. Xem presets/cute-icons/icons.yaml để biết từng trường.
+# Preset này khoá max_prompt_tokens: 77 — mô tả hình dài quá sẽ báo lỗi thay vì bị cắt im lặng.
+icons:
+  - { name: Fireball,      subtype: projectile, element: fire }
+  - { name: Frost Nova,    subtype: aoe,        element: frost }
+  - { name: Chain Lightning, prompt: "crackling bolt forking between three points", element: lightning }
+  - { name: Arcane Orbs,   subtype: orbit,      element: arcane }
+  - { name: Holy Beam,     subtype: beam,       element: holy }
+  - { name: Poison Pool,   subtype: zone,       element: nature }
+  - { name: Battle Cry,    subtype: buff,       element: fire }
+  - { name: Heal,          prompt: "a plus sign made of leaves with a soft glow", element: nature }
+  - { name: Shield Wall,   prompt: "three overlapping kite shields in a row", element: holy }
+  - { name: Teleport,      prompt: "a swirling portal ring with a small arrow jumping through", element: arcane }

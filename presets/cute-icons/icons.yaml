@@ -1,0 +1,26 @@
+# Danh sách icon cần sinh. Mỗi dòng một icon:
+#   name     tên icon → tên file kebab-case (vd "Gold Coin" → gold-coin.png)
+#   prompt   mô tả HÌNH bằng tiếng Anh, ngắn, một chủ thể (đừng tả nền, đừng tả phong cách — preset lo)
+#   element  khoá màu trong art-direction.md (gold/red/blue/green/purple/pink) — tuỳ chọn
+#   subtype  (thay cho prompt) khoá trong subtype_shape của art-direction.md
+#
+# Mẹo: "one ..." / "a single ..." giúp AI vẽ đúng MỘT vật. Tả hình khối + 1–2 chi tiết nhận diện là đủ.
+
+icons:
+  # ── Tiền tệ / tài nguyên ──
+  - { name: Gold Coin,     subtype: coin, element: gold }
+  - { name: Gem,           subtype: gem,  element: purple }
+  - { name: Energy,        prompt: "a glowing lightning bolt inside a round energy orb", element: blue }
+  - { name: Heart,         prompt: "one plump glossy heart with a small shine", element: red }
+
+  # ── Item ──
+  - { name: Potion,        prompt: "one round glass potion flask with a cork, glowing liquid inside", element: pink }
+  - { name: Sword,         prompt: "one chunky short toy sword, silver blade, round guard", element: gold }
+  - { name: Shield,        prompt: "one round shield with a star emblem in the middle", element: blue }
+  - { name: Treasure Chest, prompt: "one small treasure chest slightly open with light glowing out", element: gold }
+  - { name: Key,           prompt: "one ornate old key with a round bow", element: gold }
+
+  # ── UI ──
+  - { name: Settings,      prompt: "a rounded cog gear with a soft glossy highlight", element: blue }
+  - { name: Star,          prompt: "one chubby five pointed star with a happy shine", element: gold }
+  - { name: Gift,          prompt: "a gift box with a big ribbon bow", element: pink }

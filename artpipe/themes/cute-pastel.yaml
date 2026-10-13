@@ -1,0 +1,90 @@
+# Theme: diện mạo gói kín trong một file. ĐỪNG sửa file này để đổi gu — tạo file mới.
+# Sửa tại chỗ làm asset sinh trước và sinh sau lệch nhau mà không cách nào nhận ra.
+# Xem tools/artpipe/theme.py.
+
+theme:
+  id: cute-pastel
+  version: 1
+  label: Cute pastel — anime dễ thương, mảng tròn mập, viền dày
+  checkpoint: animagine-xl-4.0-opt.safetensors
+  workflow: icon_anime.json
+  gen_size: 1024
+generation:
+  prompt_prefix: masterpiece, cute chibi anime game icon,
+  style_phrase: soft pastel colours, rounded chunky shape, thick clean outline, simple
+    shading, subtle shine
+  negative_prompt: sticker, white border, die-cut outline, dark, gloomy, grimdark,
+    horror, magic circle, mandala, halo ring, washed out, desaturated, photograph,
+    3d render, drop shadow, text, watermark, logo, frame, border, busy background,
+    multiple objects
+  matte_method: segment
+shading:
+  enforcement: light
+  value_steps: 4
+  max_distinct_values: 24
+  gradients_allowed: true
+palette:
+  fire:
+    main: '#FF7A5C'
+    core: '#FFEFD9'
+    shadow: '#D0503A'
+    hue: 8
+  frost:
+    main: '#7FE3F5'
+    core: '#F0FCFF'
+    shadow: '#3E9CC4'
+    hue: 190
+  lightning:
+    main: '#6C7BF0'
+    core: '#FFFFFF'
+    shadow: '#3A46A8'
+    hue: 235
+  arcane:
+    main: '#D98BF0'
+    core: '#FCEEFF'
+    shadow: '#8E4FB0'
+    hue: 292
+  hostile:
+    main: '#9BEE63'
+    core: '#E4FFCB'
+    shadow: '#4E9B34'
+    hue: 95
+  environment:
+    main: '#FFC978'
+    core: '#FFE6B5'
+    shadow: '#D19553'
+    hue: 36
+  outline: '#4A3A52'
+  neutral:
+    light: '#FBF6EF'
+    mid: '#B9B2BE'
+    dark: '#5A5162'
+neutral_paint: polished silver and steel
+
+# Token màu cho UI Toolkit. KHAI TƯỜNG MINH, không suy ra từ bảng màu icon: màu HUD
+# mang nghĩa và có biên bản review đứng sau (#FF3D00 = đạn địch, #FFB020 = ngưỡng
+# nhiệt, HUD-EC-2 cấm hai cảnh báo trùng giá trị). Giá trị dưới đây chép đúng UI
+# đang chạy, nên bước gói token này KHÔNG đổi diện mạo gì.
+ui:
+  surface-0: "#1A1A2E"
+  surface-1: "#252540"
+  surface-accent: "#3A2060"
+  border: "#404060"
+  border-accent: "#C070FF"
+  text: "#F0EDE6"
+  text-muted: "#A0A0B8"
+  text-disabled: "#505060"
+  positive: "#4AE88A"
+  caution: "#8AAFAA"
+  heat: "#FFB020"
+  heat-alert: "#FF6020"
+  hostile: "#FF3D00"
+  info: "#8AC7FF"          # xanh thông tin trung tính — không phải hostile, không phải caution
+  attention: "#E8B84B"     # hổ phách "sắp xảy ra" (vd sắp xoá slot) — không phải lỗi
+  clear: "rgba(0, 0, 0, 0)"  # trong suốt có chủ đích (nền nút phẳng)
+  arrival: "#FFE2A8"       # vàng giờ vàng khi tới vùng mới — khác hẳn tông cảnh báo của caution
+  region-open: "#E8E4DA"   # dòng vùng chưa xong
+  region-done: "#9FB2A6"   # dòng vùng đã xong (lùi xuống, xanh xám)
+  scrim: "rgba(32, 32, 40, 0.72)"
+  scrim-strong: "rgba(32, 32, 40, 0.92)"
+  scrim-screen: "rgba(10, 10, 20, 0.72)"

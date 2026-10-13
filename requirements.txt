@@ -1,0 +1,7 @@
+# Chạy generate.py ở máy KHÔNG có GPU (gọi ComfyUI ở nơi khác qua --host), chạy --dry-run, --ingest, selftest.
+# Trên Colab/Kaggle không cần cài tay — setup_comfy.sh cài hết.
+pillow
+numpy
+pyyaml
+rembg
+onnxruntime

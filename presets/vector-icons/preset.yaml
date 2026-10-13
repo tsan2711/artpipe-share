@@ -1,0 +1,12 @@
+checkpoint: sd_xl_base_1.0.safetensors
+workflow: icon_sdxl_vector.json    # SDXL + LoRA DD-vector-v2 (strength 0.8)
+gen_size: 1024
+stylise: true
+variants: 4
+seed: 2000
+downloads:
+  - url: https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors
+    dir: checkpoints
+  - url: https://huggingface.co/DoctorDiffusion/doctor-diffusion-s-controllable-vector-art-xl-lora/resolve/main/DD-vector-v2.safetensors
+    dir: loras
+# Giấy phép: SDXL base = OpenRAIL++-M; DD-vector-v2 huấn luyện trên ảnh CC0/public domain.
