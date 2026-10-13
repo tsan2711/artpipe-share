@@ -1,0 +1,98 @@
+{
+  "1": {
+    "class_type": "Hy3D21LoadImageWithTransparency",
+    "inputs": { "image": "{{IMAGE}}" }
+  },
+
+  "2": {
+    "class_type": "Hy3D21MeshGenerator",
+    "inputs": {
+      "model": "{{DIT}}",
+      "image": ["1", 2],
+      "steps": 30,
+      "guidance_scale": 5.0,
+      "seed": "{{SEED}}",
+      "attention_mode": "sdpa"
+    }
+  },
+
+  "3": {
+    "class_type": "Hy3D21VAELoader",
+    "inputs": { "model_name": "{{VAE}}" }
+  },
+
+  "4": {
+    "class_type": "Hy3D21VAEDecode",
+    "inputs": {
+      "vae": ["3", 0],
+      "latents": ["2", 0],
+      "box_v": 1.01,
+      "octree_resolution": 384,
+      "num_chunks": 8000,
+      "mc_level": 0,
+      "mc_algo": "mc",
+      "enable_flash_vdm": true,
+      "force_offload": false
+    }
+  },
+
+  "5": {
+    "class_type": "Hy3D21PostprocessMesh",
+    "inputs": {
+      "trimesh": ["4", 0],
+      "remove_floaters": true,
+      "remove_degenerate_faces": true,
+      "reduce_faces": false,
+      "max_facenum": 400000,
+      "smooth_normals": false
+    }
+  },
+
+  "6": {
+    "class_type": "Hy3D21IMRemesh",
+    "inputs": {
+      "trimesh": ["5", 0],
+      "merge_vertices": true,
+      "vertex_count": "{{VERTS}}",
+      "smooth_iter": 8,
+      "align_to_boundaries": true,
+      "triangulate_result": true,
+      "max_facenum": "{{FACES}}"
+    }
+  },
+
+  "7": {
+    "class_type": "Hy3D21MeshUVWrap",
+    "inputs": { "trimesh": ["6", 0] }
+  },
+
+  "8": {
+    "class_type": "Hy3D21ExportMesh",
+    "inputs": {
+      "trimesh": ["7", 0],
+      "filename_prefix": "{{PREFIX_LOW}}",
+      "file_format": "glb",
+      "save_file": true
+    }
+  },
+
+  "9": {
+    "class_type": "PreviewAny",
+    "inputs": { "source": ["8", 0] }
+  },
+
+  "10": {
+    "class_type": "Hy3D21ExportMesh",
+    "inputs": {
+      "trimesh": ["5", 0],
+      "filename_prefix": "{{PREFIX_HIGH}}",
+      "file_format": "glb",
+      "save_file": true
+    }
+  },
+
+  "11": {
+    "class_type": "PreviewAny",
+    "inputs": { "source": ["10", 0] }
+  }
+}

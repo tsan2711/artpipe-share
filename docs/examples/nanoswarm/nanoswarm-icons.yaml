@@ -1,0 +1,23 @@
+# NanoSwarm icon manifest — fed to the shared artpipe via `run.py --catalog`.
+# Each icon = one Descriptor: kind (spell), element (palette role), subtype (shape key in
+# art-direction.md subtype_shape). No Unity write-back target — PNGs land in --out/icons/ and
+# are copied into Assets/UI by hand / a follow-up import step, so asset_path is omitted.
+#
+# slug (output filename stem) = "<kind>-<name-kebab>", e.g. spell-energy → spell-energy.png
+
+icons:
+  # ── Resources ──
+  - { kind: spell, name: Energy,   element: energy, subtype: energy-cell }
+  - { kind: spell, name: Matter,   element: matter, subtype: matter-crystal }
+
+  # ── Bot types (spawn buttons + upgrade tree) ──
+  - { kind: spell, name: Harvester, element: energy, subtype: bot-harvester }
+  - { kind: spell, name: Builder,   element: tech,   subtype: bot-builder }
+  - { kind: spell, name: Defender,  element: core,   subtype: bot-defender }
+
+  # ── Upgrades ──
+  - { kind: spell, name: Speed Up,     element: tech,   subtype: up-speed }
+  - { kind: spell, name: Yield Up,     element: energy, subtype: up-yield }
+  - { kind: spell, name: Territory,    element: tech,   subtype: up-territory }
+  - { kind: spell, name: Core Shield,  element: core,   subtype: up-shield }
+  - { kind: spell, name: Offline Gain, element: matter, subtype: up-offline }

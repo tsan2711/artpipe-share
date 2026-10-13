@@ -1,0 +1,82 @@
+# Bài test VFX thuần (không nhân vật): 4 hiệu ứng, mỗi cái một ảnh khởi đầu riêng.
+#
+# Mỗi hiệu ứng: animagine vẽ frame khởi đầu TRÊN NỀN ĐEN (anchor_gen riêng từng animation)
+# -> Wan làm chuyển động -> vfx_key: luma: alpha = độ sáng, màu = ảnh / alpha. Không dùng
+# BiRefNet (nó học tách nhân vật, với quả cầu lửa thì đoán bừa). Kết quả hợp chế độ hoà màu
+# Additive trong game; dùng Alpha Blend thường cũng được vì màu đã bỏ nhân trước với đen.
+
+character: test-vfx
+
+style: "anime game visual effect, vibrant glowing colors, clean shapes"
+motion_suffix: "fixed static camera, the effect stays centered in frame, nothing else in the scene"
+
+defaults:
+  frames: 33
+  width: 512
+  height: 512
+  variants: 1
+  seed: 3000
+  vfx_key: luma     # bg tự thành đen
+  framing: union    # hiệu ứng tự đặt khung (không có "tư thế đứng" để làm thước)
+  cell: 256
+  pad: 2
+  count: 16
+  fps: 16
+  upscaler: RealESRGAN_x4plus_anime_6B.pth
+  upscale: 2
+
+x-gen: &gen
+  checkpoint: animagine-xl-4.0-opt.safetensors
+  workflow: icon_anime.json
+  size: 1024
+  seed: 11
+  negative: >-
+    1girl, 1boy, human, character, person, face, hands, text, watermark, signature,
+    frame, border, ground, floor, landscape, scenery, white background, gray background
+
+animations:
+  fire:
+    anchor_gen:
+      <<: *gen
+      prompt: >-
+        no humans, a single burning flame, bright orange and yellow fire, glowing embers,
+        centered, isolated on pure black background, simple background, anime style effect,
+        masterpiece, best quality
+    prompt: >-
+      the flame burns steadily, tongues of fire flickering and licking upward,
+      small embers rising, continuous looping fire
+    loop: true
+  magic_circle:
+    anchor_gen:
+      <<: *gen
+      prompt: >-
+        no humans, a glowing cyan magic circle, runes and geometric patterns, bright light,
+        seen from the front, centered, isolated on pure black background, simple background,
+        anime style effect, masterpiece, best quality
+    prompt: >-
+      the magic circle slowly rotates, the runes pulse with light, soft sparkles drift
+      around it, continuous looping magic
+    loop: true
+  lightning_orb:
+    anchor_gen:
+      <<: *gen
+      prompt: >-
+        no humans, a ball of purple electric lightning, crackling electricity arcs,
+        glowing energy sphere, centered, isolated on pure black background,
+        simple background, anime style effect, masterpiece, best quality
+    prompt: >-
+      the lightning orb crackles, electric arcs jump and flicker around it, the sphere
+      pulses with energy, continuous looping electricity
+    loop: true
+  explosion:
+    anchor_gen:
+      <<: *gen
+      prompt: >-
+        no humans, a small bright fireball spark, glowing orange core, centered,
+        isolated on pure black background, simple background, anime style effect,
+        masterpiece, best quality
+    prompt: >-
+      the small fireball suddenly bursts into a big fiery explosion, flames and sparks
+      expand outward, then the fire fades into dark smoke and disappears completely
+    loop: false       # nổ một lần: bắt đầu từ tia lửa, kết thúc tắt hẳn
+    frames: 33

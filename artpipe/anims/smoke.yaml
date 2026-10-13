@@ -1,0 +1,40 @@
+# Manifest mẫu cho làn anim — cũng là bài smoke test của máy render.
+#
+#   python3 tools/artpipe/anim.py --manifest tools/artpipe/anims/smoke.yaml --out out/anim generate
+#
+# Anchor là ảnh mẫu của mor-o/comfyui-2d-character-pipeline (MIT, xem smoke/LICENSE-mor-o):
+# họ đã chạy đúng ảnh này qua Wan 2.2 ra walk/idle dùng được, nên nếu máy mình ra rác thì lỗi
+# nằm ở máy/model/graph, không phải ở ảnh đầu vào.
+#
+# Viết manifest cho nhân vật thật: copy file này, đổi `character`, `anchor`, `style` và prompt.
+
+character: smoke-chibi
+anchor: smoke/anchor.png   # tương đối với file manifest này
+anchor_bg: "#FFFFFF"                         # nền phẳng Wan nhìn thấy (anchor có alpha thì đổ lên màu này)
+
+# Nối sau mọi prompt — mô tả NÉT VẼ, không mô tả chuyển động.
+style: "2D chibi cartoon character, clean black line art, flat colors"
+negative: "face, eyes, mouth, clothing"      # riêng nhân vật này: không mặt, không áo
+
+defaults:
+  frames: 33        # Wan: 4n+1 (17, 25, 33, 49, 81). 33 = 2 giây @16fps
+  size: 512
+  variants: 2       # số seed mỗi animation — chọn cái tốt nhất bằng review.png
+  seed: 1000
+  cell: 128         # ô spritesheet (px)
+  pad: 4
+  count: 8          # số frame giữ lại, chia đều trên clip
+  colors: 0         # >0 = khoá bảng màu chung cho cả chuỗi (chống nhấp nháy màu)
+  alpha_threshold: 0  # >0 = alpha nhị phân (pixel art)
+
+animations:
+  idle:
+    prompt: "the character stands still in a relaxed idle pose, body swaying very slightly, shoulders rising and falling a little, feet planted"
+    loop: true
+    fps: 6
+    count: 6
+  walk:
+    prompt: "the character walks in place, side view, steady walk cycle, arms swinging naturally, legs alternating, does not move forward"
+    loop: true
+    fps: 10
+    count: 8

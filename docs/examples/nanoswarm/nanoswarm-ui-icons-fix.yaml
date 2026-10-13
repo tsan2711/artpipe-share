@@ -1,0 +1,18 @@
+# Re-roll of the UI batch entries that came out as blank bubbles (2026-09-23). Sharper shapes in
+# art-direction.md. Import with: import_ui_icons.py <out> nanoswarm-ui-icons-fix.yaml
+icons:
+  - { kind: spell, name: "Tab Combat", element: matter, subtype: tab-combat }
+  - { kind: spell, name: "IAP Remove Ads", element: tech, subtype: iap-remove-ads }
+  - { kind: spell, name: "PT Territory Memory", element: tech, subtype: pt-territory-memory }
+  - { kind: spell, name: "PT Quantum Harvest", element: matter, subtype: pt-quantum-harvest }
+  - { kind: spell, name: "PT Defender Legacy", element: matter, subtype: pt-defender-legacy }
+  - { kind: spell, name: "PT Hive Mind", element: core, subtype: pt-hive-mind }
+  - { kind: spell, name: "PT Infinite Territory", element: core, subtype: pt-infinite-territory }
+  - { kind: spell, name: "RT Node Memory", element: energy, subtype: rt-node-memory }
+  - { kind: spell, name: "RT Threat Intel", element: matter, subtype: rt-threat-intel }
+  - { kind: spell, name: "RT Auto-Target", element: matter, subtype: rt-auto-target }
+  - { kind: spell, name: "RT Deep Survey", element: energy, subtype: rt-deep-survey }
+  - { kind: spell, name: "RT Quantum Router", element: tech, subtype: rt-quantum-router }
+  - { kind: spell, name: "RT Expanded Field", element: energy, subtype: rt-expanded-field }
+  - { kind: spell, name: "RT Neural Pathfinding", element: tech, subtype: rt-neural-pathfinding }
+  - { kind: spell, name: "RT Multiplier Extension", element: core, subtype: rt-multiplier-extension }

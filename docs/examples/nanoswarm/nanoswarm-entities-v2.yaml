@@ -1,0 +1,15 @@
+# Entity sprites v2 (2026-09-23): bots, cores, and one sprite per node type. Bots + base nodes are
+# imported greyscale (the bot shader / node view tint them by team / ring); special nodes keep colour.
+# Import with: import_entity_sprites_v2.py <out>
+icons:
+  - { kind: spell, name: "Ent Harvester", element: energy, subtype: ent2-harvester }
+  - { kind: spell, name: "Ent Builder", element: tech, subtype: ent2-builder }
+  - { kind: spell, name: "Ent Defender", element: core, subtype: ent2-defender }
+  - { kind: spell, name: "Ent Rival", element: matter, subtype: ent2-rival }
+  - { kind: spell, name: "Ent Core", element: energy, subtype: ent2-core }
+  - { kind: spell, name: "Ent Civ Core", element: matter, subtype: ent2-civ-core }
+  - { kind: spell, name: "Ent Node Energy", element: energy, subtype: ent2-node-energy }
+  - { kind: spell, name: "Ent Node Matter", element: matter, subtype: ent2-node-matter }
+  - { kind: spell, name: "Ent Node Rare", element: core, subtype: ent2-node-rare }
+  - { kind: spell, name: "Ent Node Corrupted", element: matter, subtype: ent2-node-corrupted }
+  - { kind: spell, name: "Ent Node Cache", element: core, subtype: ent2-node-cache }

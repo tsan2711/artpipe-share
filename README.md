@@ -97,6 +97,23 @@ Gom preset + cài đặt + danh sách icon vào **một file JSON** (mẫu trong
 | `presets/<p>/preset.yaml` | ai làm preset, hiếm khi | model + link tải, graph ComfyUI, cỡ sinh, biến thể/seed mặc định |
 | `artpipe/workflows/*.json` | hầu như không | graph ComfyUI (sampler, steps, cfg, LoRA) — sửa trong ComfyUI rồi *Export (API)* |
 
+## Animation (nâng cao)
+
+Một ảnh nhân vật đã duyệt (**anchor — điểm neo** giữ danh tính) → Wan 2.2 sinh cả clip một lần (frame liền mạch) →
+BiRefNet tách nền → hậu kỳ cả chuỗi (một hộp cắt chung, pivot đáy-giữa) → `<anim>_sheet.png` + `<anim>.json` + `.gif`.
+
+- Notebook: `ANIM = "artpipe/anims/smoke.yaml"` → Run all. Dòng lệnh: `python3 animate.py --manifest artpipe/anims/smoke.yaml`.
+- Nhân vật của bạn: copy `artpipe/anims/smoke.yaml`, đổi `anchor` (PNG nền trong) + prompt chuyển động từng animation.
+  Chưa có anchor → dùng `anchor_gen` để Animagine vẽ, duyệt, rồi **khoá** (xem `test-adventurer.yaml`).
+- Đổi cỡ ô / fps / số frame → `--post <mẻ cũ>`, **không render lại**.
+- Nặng: lần đầu tải ~24GB, mỗi clip ~10–20 phút trên T4. **Dùng Kaggle** (RAM 29GB) — Colab free 12.7GB RAM có thể thiếu.
+- ⚠️ Làn này đã chạy trên máy render cũ (PC 16GB) và trên Colab/Kaggle qua notebook cũ, **chưa chạy lại bằng repo này**.
+
+## Kho kiến thức + dữ liệu thật của hai game
+
+[`docs/README.md`](docs/README.md): bài học đã trả giá, cơ chế từng làn, và spec / manifest / script **thật** của NanoSwarm
+và June (gồm ~200 mô tả hình đã dùng, script img2img dựng anchor, prompt bộ gacha-chibi).
+
 ## Chạy ở máy khác (không phải Colab/Kaggle)
 
 ```bash
@@ -113,12 +130,15 @@ ComfyUI tự dựng (Windows/máy khác) phải có đúng model + LoRA ghi tron
 
 ```
 artpipe.ipynb       notebook Colab + Kaggle (dựng bởi tools/build_notebook.py, code nhúng sẵn)
-generate.py         MỘT lệnh: dựng ComfyUI → tải model → sinh → tách nền → chấm → chọn → xuất → zip
+generate.py         làn ICON — một lệnh: dựng ComfyUI → tải model → sinh → tách nền → chấm → chọn → xuất → zip
+animate.py          làn ANIMATION — một lệnh: dựng ComfyUI + Wan 2.2 → clip → spritesheet + gif
 setup_comfy.sh      dựng ComfyUI trên Linux GPU (generate.py tự gọi)
 jobs/*.json         file ý tưởng mẫu: preset + cài đặt + danh sách icon trong một file
 presets/<tên>/      art-direction.md (phong cách, bảng màu, luật chấm) · icons.yaml (danh sách) · preset.yaml (model)
 artpipe/            lõi pipeline: prompt, gọi ComfyUI, tách nền, ép viền, chấm điểm, trang duyệt
-  workflows/        graph ComfyUI (API format)
+  workflows/        graph ComfyUI (API format): icon, anim Wan 2.2 (clip / vòng lặp), ảnh→mesh 3D
+  anims/            manifest animation mẫu + anchor (điểm neo)
+docs/               kho kiến thức + dữ liệu thật của NanoSwarm / June (docs/README.md)
 tools/              selftest.py · build_notebook.py · pack_atlas.py · make_gallery.py
 docs/samples/       ảnh mẫu của bộ sưu tập
 ```

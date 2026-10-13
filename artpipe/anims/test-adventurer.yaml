@@ -1,0 +1,89 @@
+# Bài test độ bền: nhân vật MẶC ĐỦ ĐỒ (áo choàng, giáp da, dây lưng, tóc) + idle dài 32 frame.
+# Nhiều chi tiết + nhiều frame = nhược điểm của Wan lộ rõ nhất: hoạ tiết "sôi", đồ đổi
+# hình, tay biến dạng, màu trôi dần. Đây là bài xem có dùng được cho nhân vật thật không.
+#
+# Không có ảnh anchor: làn tự vẽ bằng animagine-xl trên máy render (anchor_gen), lưu ở
+# out/anim/test-adventurer/anchor.png và dùng lại ở lần chạy sau.
+
+character: test-adventurer
+
+# Anchor đã duyệt 2026-09-23 (sinh từ anchor_gen bên dưới, seed 7) — khoá lại để mọi
+# animation dùng ĐÚNG một ảnh. anchor_gen giữ làm hồ sơ, chỉ chạy khi xoá dòng này.
+anchor: test-adventurer/anchor.png
+
+anchor_gen:
+  checkpoint: animagine-xl-4.0-opt.safetensors
+  workflow: icon_anime.json
+  size: 1024
+  seed: 7
+  prompt: >-
+    1boy, solo, full body, standing, straight-on, looking at viewer, young adventurer,
+    short brown hair, green hooded cloak, brown leather armor, white shirt, belt with
+    pouches, fingerless gloves, dark trousers, knee-high brown boots, arms at sides,
+    simple background, white background, anime coloring, clean lineart,
+    masterpiece, best quality, very aesthetic
+  negative: >-
+    lowres, bad anatomy, bad hands, extra fingers, missing fingers, cropped, out of frame,
+    text, watermark, signature, multiple views, reference sheet, weapon, shadow,
+    gradient background
+
+# Wan chạy cfg=1 (bản distill lightx2v) -> negative prompt KHÔNG có tác dụng. Chỉ điều
+# khiển bằng prompt dương: tả đúng cái muốn thấy, đừng nêu thứ không muốn (vd "breathing"
+# ở bài smoke đã khiến Wan vẽ thêm miệng + làn hơi).
+style: "anime character, clean line art, cel shading"
+
+defaults:
+  frames: 33        # 4n+1 gần 30 nhất cho vòng lặp: bỏ frame cuối (trùng đầu) còn 32
+  size: 512
+  width: 480        # khung DỌC cho nhân vật đứng: gần gấp đôi pixel trên người so với 512x512.
+  height: 832       # Kích thước tuỳ mục đích — sprite nằm ngang/quái to thì đặt khác.
+  variants: 2
+  seed: 2000
+  cell: 256         # ô to để soi chi tiết đồ
+  upscaler: RealESRGAN_x4plus_anime_6B.pth   # vẽ lại nét viền sắc trên máy render (x4 rồi thu x2)
+  upscale: 2
+  sharpen: 80       # unsharp nhẹ sau khi thu về ô
+  pad: 4
+  count: 0          # giữ TẤT CẢ 32 frame — bài này để soi từng frame
+  fps: 16           # đúng nhịp Wan sinh ra
+
+animations:
+  idle:
+    prompt: >-
+      the adventurer stands in a relaxed idle stance, weight shifting slightly from one leg
+      to the other, shoulders rising and falling a little, the cloak and hair swaying gently,
+      arms relaxed at the sides, feet stay planted, facing the viewer the whole time,
+      calm neutral expression
+    loop: true
+
+  # ── Di chuyển: anchor nhìn thẳng -> đi/chạy TẠI CHỖ hướng về người xem. Muốn góc
+  # nghiêng (side-scroller) cần anchor nghiêng — Wan không tự xoay nhân vật cho đẹp.
+  walk:
+    prompt: >-
+      the adventurer walks in place toward the viewer, legs alternating steps, arms swinging
+      naturally, the cloak swaying with each step, stays on the same spot, facing the viewer
+    loop: true
+  run:
+    prompt: >-
+      the adventurer runs in place toward the viewer, knees lifting high, arms pumping fast,
+      the cloak flapping behind, energetic running motion, stays on the same spot, facing the viewer
+    loop: true
+
+  # ── Đánh: dùng graph vòng lặp để đòn BẮT ĐẦU và KẾT THÚC đúng tư thế đứng của anchor —
+  # nối vào idle không bị giật. (loop: true ở đây = "về lại tư thế đầu", game phát 1 lần.)
+  punch:
+    prompt: >-
+      the adventurer quickly throws a strong punch forward with the right fist toward the
+      viewer, body twisting into the punch, then pulls the fist back and returns to the
+      relaxed standing stance
+    loop: true
+    frames: 25        # đòn nhanh: ~1.5 giây
+    fps: 12
+    hold_extreme: 4   # giữ frame ra đòn 4 nhịp — đòn có lực nhờ khoảnh khắc đứng lại
+  cast:
+    prompt: >-
+      the adventurer raises the right hand and casts a spell, a bright green magic glow
+      swirls around the raised hand, then lowers the hand and returns to the relaxed
+      standing stance
+    loop: true
+    vfx_key: black    # sinh trên nền đen: vầng sáng tách sạch, không viền trắng, có layer VFX riêng

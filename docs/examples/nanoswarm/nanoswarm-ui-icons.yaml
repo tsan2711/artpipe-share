@@ -1,0 +1,79 @@
+# NanoSwarm UI completion batch (2026-09-23) — UI icons, achievement tabs, IAP art, 3 fixes
+# for blank HUD icons, app icon, 16 Prestige Tree + 25 Research Tree node icons.
+# Shapes live in art-direction.md subtype_shape (ui-*, tab-*, iap-*, fix-*, app-*, pt-*, rt-*).
+
+icons:
+  # ── UI ──
+  - { kind: spell, name: "Settings", element: tech, subtype: ui-settings }
+  - { kind: spell, name: "Close", element: core, subtype: ui-close }
+  - { kind: spell, name: "Missions", element: core, subtype: ui-missions }
+  - { kind: spell, name: "Nano Core", element: matter, subtype: ui-nano-core }
+  - { kind: spell, name: "Trophy", element: core, subtype: ui-trophy }
+  - { kind: spell, name: "Shop", element: core, subtype: ui-shop }
+  - { kind: spell, name: "Watch Ad", element: energy, subtype: ui-ad }
+  - { kind: spell, name: "Volume Master", element: tech, subtype: ui-vol-master }
+  - { kind: spell, name: "Volume SFX", element: energy, subtype: ui-vol-sfx }
+  - { kind: spell, name: "Volume Music", element: matter, subtype: ui-vol-music }
+  - { kind: spell, name: "Lock", element: tech, subtype: ui-lock }
+  - { kind: spell, name: "Claimed", element: energy, subtype: ui-check }
+  - { kind: spell, name: "Rivals", element: matter, subtype: ui-rivals }
+  - { kind: spell, name: "Knowledge", element: tech, subtype: ui-knowledge }
+  # ── Achievement tabs ──
+  - { kind: spell, name: "Tab Colony", element: energy, subtype: tab-colony }
+  - { kind: spell, name: "Tab Combat", element: matter, subtype: tab-combat }
+  - { kind: spell, name: "Tab Prestige", element: core, subtype: tab-prestige }
+  - { kind: spell, name: "Tab Collection", element: tech, subtype: tab-collection }
+  - { kind: spell, name: "Tab Secret", element: matter, subtype: tab-secret }
+  # ── IAP ──
+  - { kind: spell, name: "IAP Remove Ads", element: tech, subtype: iap-remove-ads }
+  - { kind: spell, name: "IAP Starter Pack", element: core, subtype: iap-starter-pack }
+  - { kind: spell, name: "IAP Prestige Boost", element: matter, subtype: iap-prestige-boost }
+  # ── Fix blank HUD icons ──
+  - { kind: spell, name: "Fix Expand", element: tech, subtype: fix-expand }
+  - { kind: spell, name: "Fix Speed Up", element: tech, subtype: fix-speed-up }
+  - { kind: spell, name: "Fix Yield Up", element: energy, subtype: fix-yield-up }
+  # ── App icon ──
+  - { kind: spell, name: "App Icon", element: energy, subtype: app-icon }
+  # ── Prestige Tree nodes ──
+  - { kind: spell, name: "PT Legacy Harvesters", element: energy, subtype: pt-legacy-harvesters }
+  - { kind: spell, name: "PT Echo Yield", element: energy, subtype: pt-echo-yield }
+  - { kind: spell, name: "PT Fast Start", element: tech, subtype: pt-fast-start }
+  - { kind: spell, name: "PT Matter Seed", element: tech, subtype: pt-matter-seed }
+  - { kind: spell, name: "PT Builder Legacy", element: tech, subtype: pt-builder-legacy }
+  - { kind: spell, name: "PT Nano Memory", element: tech, subtype: pt-nano-memory }
+  - { kind: spell, name: "PT Territory Memory", element: tech, subtype: pt-territory-memory }
+  - { kind: spell, name: "PT Rival Taming", element: tech, subtype: pt-rival-taming }
+  - { kind: spell, name: "PT Quantum Harvest", element: matter, subtype: pt-quantum-harvest }
+  - { kind: spell, name: "PT Nano Evolution", element: matter, subtype: pt-nano-evolution }
+  - { kind: spell, name: "PT Matter Cascade", element: matter, subtype: pt-matter-cascade }
+  - { kind: spell, name: "PT Defender Legacy", element: matter, subtype: pt-defender-legacy }
+  - { kind: spell, name: "PT Singularity", element: core, subtype: pt-singularity }
+  - { kind: spell, name: "PT Hive Mind", element: core, subtype: pt-hive-mind }
+  - { kind: spell, name: "PT Infinite Territory", element: core, subtype: pt-infinite-territory }
+  - { kind: spell, name: "PT Nano Ascension", element: core, subtype: pt-nano-ascension }
+  # ── Research Tree nodes ──
+  - { kind: spell, name: "RT Swarm Sync", element: tech, subtype: rt-swarm-sync }
+  - { kind: spell, name: "RT Node Memory", element: energy, subtype: rt-node-memory }
+  - { kind: spell, name: "RT Energy Compression", element: core, subtype: rt-energy-compression }
+  - { kind: spell, name: "RT Threat Intel", element: matter, subtype: rt-threat-intel }
+  - { kind: spell, name: "RT Passive Scan", element: tech, subtype: rt-passive-scan }
+  - { kind: spell, name: "RT Formation Tactics", element: tech, subtype: rt-formation-tactics }
+  - { kind: spell, name: "RT Rapid Survey", element: energy, subtype: rt-rapid-survey }
+  - { kind: spell, name: "RT Matter Extraction", element: core, subtype: rt-matter-extraction }
+  - { kind: spell, name: "RT Adaptive Shield", element: matter, subtype: rt-adaptive-shield }
+  - { kind: spell, name: "RT Rare Vein Detector", element: energy, subtype: rt-rare-vein }
+  - { kind: spell, name: "RT Auto-Target", element: matter, subtype: rt-auto-target }
+  - { kind: spell, name: "RT Offline Tripler", element: core, subtype: rt-offline-tripler }
+  - { kind: spell, name: "RT Expanded Roster", element: tech, subtype: rt-expanded-roster }
+  - { kind: spell, name: "RT Deep Survey", element: energy, subtype: rt-deep-survey }
+  - { kind: spell, name: "RT Coordinated Strike", element: matter, subtype: rt-coordinated-strike }
+  - { kind: spell, name: "RT Nano Reserve", element: core, subtype: rt-nano-reserve }
+  - { kind: spell, name: "RT Quantum Router", element: tech, subtype: rt-quantum-router }
+  - { kind: spell, name: "RT Field Researcher", element: tech, subtype: rt-field-researcher }
+  - { kind: spell, name: "RT Expanded Field", element: energy, subtype: rt-expanded-field }
+  - { kind: spell, name: "RT Neural Pathfinding", element: tech, subtype: rt-neural-pathfinding }
+  - { kind: spell, name: "RT Multiplier Extension", element: core, subtype: rt-multiplier-extension }
+  - { kind: spell, name: "RT Defense Network", element: matter, subtype: rt-defense-network }
+  - { kind: spell, name: "RT Corrupted Analysis", element: matter, subtype: rt-corrupted-analysis }
+  - { kind: spell, name: "RT Cache Proliferation", element: tech, subtype: rt-cache-proliferation }
+  - { kind: spell, name: "RT Hive Core", element: core, subtype: rt-hive-core }

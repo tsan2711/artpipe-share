@@ -1,0 +1,13 @@
+# HUD icon refresh (2026-09-23): the 10 original HUD icons, redrawn in the UI batch style.
+# Import with: import_hud_icons.py <out> — replaces Assets/UI/HUD/Icons/icon_*.png in place.
+icons:
+  - { kind: spell, name: "HUD Energy", element: energy, subtype: hud-energy }
+  - { kind: spell, name: "HUD Matter", element: matter, subtype: hud-matter }
+  - { kind: spell, name: "HUD Harvester", element: energy, subtype: hud-harvester }
+  - { kind: spell, name: "HUD Builder", element: tech, subtype: hud-builder }
+  - { kind: spell, name: "HUD Defender", element: core, subtype: hud-defender }
+  - { kind: spell, name: "HUD Speed", element: tech, subtype: hud-speed }
+  - { kind: spell, name: "HUD Yield", element: energy, subtype: hud-yield }
+  - { kind: spell, name: "HUD Territory", element: tech, subtype: hud-territory }
+  - { kind: spell, name: "HUD Shield", element: core, subtype: hud-shield }
+  - { kind: spell, name: "HUD Offline", element: matter, subtype: hud-offline }

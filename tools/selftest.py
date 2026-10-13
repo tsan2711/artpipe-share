@@ -87,6 +87,19 @@ def test_jobs() -> None:
               + ("" if r.returncode == 0 else "\n" + (r.stdout + r.stderr)[-800:]))
 
 
+def test_anims() -> None:
+    print("[1c] làn animation (manifest + graph)")
+    import yaml as _y
+    for m in sorted((ROOT / "artpipe" / "anims").glob("*.yaml")):
+        d = _y.safe_load(m.read_text("utf-8"))
+        check(bool(d.get("animations")), f"{m.name}: có animations")
+        a = d.get("anchor")
+        has_gen = bool(d.get("anchor_gen")) or any("anchor_gen" in (v or {}) for v in d["animations"].values())
+        check(has_gen or (a and (m.parent / a).exists()), f"{m.name}: có anchor ({a}) hoặc anchor_gen")
+    for wf in ("anim_wan22_i2v.json", "anim_wan22_loop.json"):
+        check((ROOT / "artpipe" / "workflows" / wf).exists(), f"workflow {wf}")
+
+
 class FakeComfy(http.server.BaseHTTPRequestHandler):
     image = b""
     prompts: list[dict] = []
@@ -164,6 +177,7 @@ def test_notebook() -> None:
 def main() -> int:
     test_presets()
     test_jobs()
+    test_anims()
     test_end_to_end()
     test_notebook()
     print(f"\n{'XANH' if not FAILS else f'ĐỎ — {len(FAILS)} lỗi'}")

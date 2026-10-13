@@ -23,8 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 NB = ROOT / "artpipe.ipynb"
 REPO = "tsan2711/artpipe-share"
 
-INCLUDE = ["generate.py", "setup_comfy.sh", "requirements.txt", "tools/pack_atlas.py"]
-INCLUDE_DIRS = [("artpipe", ("*.py", "workflows/*.json", "themes/*.yaml")), ("presets", ("**/*",)), ("jobs", ("*.json", "*.yaml"))]
+INCLUDE = ["generate.py", "animate.py", "setup_comfy.sh", "requirements.txt", "tools/pack_atlas.py"]
+INCLUDE_DIRS = [("artpipe", ("*.py", "workflows/*.json", "themes/*.yaml", "anims/*.yaml", "anims/*/anchor.png", "anims/*/LICENSE*")), ("presets", ("**/*",)), ("jobs", ("*.json", "*.yaml"))]
 
 
 def files() -> list[Path]:
@@ -93,6 +93,7 @@ PRESET   = "kawaii-doodle" #@param ["kawaii-doodle", "gacha-chibi", "pastel-rpg"
 VARIANTS = 0              #@param {type:"integer"}
 ONLY     = ""             #@param {type:"string"}
 SAVE_TO_DRIVE = False     #@param {type:"boolean"}
+ANIM     = ""             #@param ["", "artpipe/anims/smoke.yaml", "artpipe/anims/test-adventurer.yaml", "artpipe/anims/test-vfx.yaml"] {allow-input: true}
 JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json", "jobs/monsters.json", "jobs/skills.json", "upload"] {allow-input: true}
 
 # PRESET   kawaii-doodle = icon "bánh bao" vẽ tay, mặt chấm + má hồng (Animagine XL) — đã chạy thử, có ảnh mẫu
@@ -104,6 +105,8 @@ JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json"
 # VARIANTS số phương án mỗi icon (0 = theo preset, thường 3–4)
 # ONLY     chỉ sinh icon có tên chứa chuỗi này (vd "potion"); để trống = cả danh sách
 # SAVE_TO_DRIVE  (Colab) chép thêm file zip vào Google Drive/artpipe/
+# ANIM     (nâng cao) làn ANIMATION: manifest yaml → spritesheet + gif. Có ANIM thì ô 🚀 chạy animation thay vì icon.
+#          Lần đầu tải ~24GB, mỗi clip ~10–20 phút trên T4. Nên dùng Kaggle (RAM 29GB). Xem docs/knowledge/anim-lane.md
 # JOB      file ý tưởng JSON (preset + số biến thể + danh sách icon trong MỘT file) — có JOB thì bỏ qua PRESET/MY_ICONS.
 #          "jobs/..." = mẫu trong repo · "upload" = (Colab) chọn file .json từ máy
 #          · đường dẫn bất kỳ, vd Kaggle: "/kaggle/input/<dataset>/my-job.json"
@@ -177,6 +180,7 @@ RUN = """
 import subprocess, sys, time, glob
 from pathlib import Path
 
+anim = ANIM.strip()
 job = JOB.strip()
 if job == 'upload':
     from google.colab import files as _f
@@ -187,17 +191,24 @@ if job == 'upload':
     Path(job).write_bytes(up[name])
 elif job and not Path(job).is_absolute():
     job = str(CODE / job)
-if job:
+if anim:
+    args = [sys.executable, '-u', str(CODE / 'animate.py'), '--manifest', str(CODE / anim) if not anim.startswith('/') else anim]
+    if ONLY.strip():
+        args += ['--only', ONLY.strip()]
+    if VARIANTS:
+        args += ['--variants', str(VARIANTS)]
+    print('làn animation:', anim)
+elif job:
     args = [sys.executable, '-u', str(CODE / 'generate.py'), '--job', job]
     print('dùng file ý tưởng:', job)
 else:
     args = [sys.executable, '-u', str(CODE / 'generate.py'), '--preset', str(CODE / 'presets' / PRESET)]
-if VARIANTS:
+if VARIANTS and not anim:
     args += ['--variants', str(VARIANTS)]
-if ONLY.strip():
+if ONLY.strip() and not anim:
     args += ['--only', ONLY.strip()]
 icons_text = '\\n'.join(l for l in MY_ICONS.splitlines() if l.strip() and not l.strip().startswith('#'))
-if icons_text and not job:
+if icons_text and not job and not anim:
     custom = CODE / 'out' / 'my-icons.yaml'
     custom.parent.mkdir(parents=True, exist_ok=True)
     custom.write_text('icons:\\n' + '\\n'.join('  ' + l.strip() for l in icons_text.splitlines()), 'utf-8')
@@ -212,7 +223,7 @@ p.wait()
 print(f'\\n⏱  {(time.time() - t0) / 60:.1f} phút')
 if p.returncode != 0:
     raise RuntimeError(f'❌ generate.py lỗi (mã {p.returncode}) — đọc dòng đỏ phía trên')
-OUT = Path(max(glob.glob(str(CODE / 'out' / '*' / 'report.json')), key=lambda s: Path(s).stat().st_mtime)).parent
+OUT = Path(max((d for d in glob.glob(str(CODE / 'out' / '*')) if Path(d).is_dir()), key=lambda s: Path(s).stat().st_mtime))
 print('kết quả:', OUT)
 """
 
@@ -228,17 +239,26 @@ def tag(png, size, label, color='#9a92a6'):
             f'background:#1e1b2e;border-radius:8px"><figcaption style="font:11px monospace;color:{color};'
             f'word-break:break-all">{label}</figcaption></figure>')
 
-report = {r['variant']: r for r in json.loads((OUT / 'report.json').read_text())}
-COL = {'auto_accept': '#4caf50', 'needs_review': '#e0a33a', 'auto_reject': '#e2504a'}
-html = '<div style="background:#141118;padding:12px;border-radius:10px"><h3 style="color:#eee">best/</h3>'
-html += ''.join(tag(p, 128, p.stem) for p in sorted((OUT / 'best').glob('*.png')))
-html += '<h3 style="color:#eee">mọi biến thể (xanh = nhận · vàng = xem tay · đỏ = loại)</h3>'
-for p in sorted((OUT / 'icons').glob('*.png')):
-    r = report.get(p.stem, {})
-    html += tag(p, 96, p.stem, COL.get(r.get('verdict'), '#9a92a6'))
-display(HTML(html + '</div>'))
-print('Không ưng bản best/? Lấy biến thể khác trong icons/ (cùng tên + __seed). '
-      'Lý do trượt của từng ảnh: sheet.html trong zip.')
+if not (OUT / 'report.json').exists():   # làn animation: hiện gif + spritesheet
+    html = '<div style="background:#141118;padding:12px;border-radius:10px">'
+    for gif in sorted(OUT.rglob('*_preview.gif')):
+        b = base64.b64encode(gif.read_bytes()).decode()
+        html += (f'<figure style="display:inline-block;margin:8px;text-align:center"><img src="data:image/gif;base64,{b}" '
+                 f'style="background:#2a2438;border-radius:8px"><figcaption style="color:#ccc;font:12px monospace">'
+                 f'{gif.relative_to(OUT)}</figcaption></figure>')
+    display(HTML(html + '</div>'))
+else:
+    report = {r['variant']: r for r in json.loads((OUT / 'report.json').read_text())}
+    COL = {'auto_accept': '#4caf50', 'needs_review': '#e0a33a', 'auto_reject': '#e2504a'}
+    html = '<div style="background:#141118;padding:12px;border-radius:10px"><h3 style="color:#eee">best/</h3>'
+    html += ''.join(tag(p, 128, p.stem) for p in sorted((OUT / 'best').glob('*.png')))
+    html += '<h3 style="color:#eee">mọi biến thể (xanh = nhận · vàng = xem tay · đỏ = loại)</h3>'
+    for p in sorted((OUT / 'icons').glob('*.png')):
+        r = report.get(p.stem, {})
+        html += tag(p, 96, p.stem, COL.get(r.get('verdict'), '#9a92a6'))
+    display(HTML(html + '</div>'))
+    print('Không ưng bản best/? Lấy biến thể khác trong icons/ (cùng tên + __seed). '
+          'Lý do trượt của từng ảnh: sheet.html trong zip.')
 """
 
 DOWNLOAD = """

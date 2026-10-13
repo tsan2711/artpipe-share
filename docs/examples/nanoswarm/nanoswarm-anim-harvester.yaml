@@ -1,0 +1,40 @@
+# Ally Harvester animation — 24 frames total (8 per state).
+# Gen nhiều hơn để pick — contact sheet output, không pick tự động.
+# pack_anim_spritesheet.py --contact-sheet để xem tất cả, sau đó Bi chọn frame nào dùng.
+
+entity: ally-harvester
+fps:
+  idle:   4
+  move:   10
+  attack: 12
+
+icons:
+  # ── idle (8 frames) ──
+  - { kind: spell, name: "harv idle 0", element: energy, subtype: anim-harv-idle-0 }
+  - { kind: spell, name: "harv idle 1", element: energy, subtype: anim-harv-idle-1 }
+  - { kind: spell, name: "harv idle 2", element: energy, subtype: anim-harv-idle-2 }
+  - { kind: spell, name: "harv idle 3", element: energy, subtype: anim-harv-idle-3 }
+  - { kind: spell, name: "harv idle 4", element: energy, subtype: anim-harv-idle-4 }
+  - { kind: spell, name: "harv idle 5", element: energy, subtype: anim-harv-idle-5 }
+  - { kind: spell, name: "harv idle 6", element: energy, subtype: anim-harv-idle-6 }
+  - { kind: spell, name: "harv idle 7", element: energy, subtype: anim-harv-idle-7 }
+
+  # ── move (8 frames) ──
+  - { kind: spell, name: "harv move 0", element: energy, subtype: anim-harv-move-0 }
+  - { kind: spell, name: "harv move 1", element: energy, subtype: anim-harv-move-1 }
+  - { kind: spell, name: "harv move 2", element: energy, subtype: anim-harv-move-2 }
+  - { kind: spell, name: "harv move 3", element: energy, subtype: anim-harv-move-3 }
+  - { kind: spell, name: "harv move 4", element: energy, subtype: anim-harv-move-4 }
+  - { kind: spell, name: "harv move 5", element: energy, subtype: anim-harv-move-5 }
+  - { kind: spell, name: "harv move 6", element: energy, subtype: anim-harv-move-6 }
+  - { kind: spell, name: "harv move 7", element: energy, subtype: anim-harv-move-7 }
+
+  # ── attack (8 frames) ──
+  - { kind: spell, name: "harv atk 0", element: energy, subtype: anim-harv-atk-0 }
+  - { kind: spell, name: "harv atk 1", element: energy, subtype: anim-harv-atk-1 }
+  - { kind: spell, name: "harv atk 2", element: energy, subtype: anim-harv-atk-2 }
+  - { kind: spell, name: "harv atk 3", element: energy, subtype: anim-harv-atk-3 }
+  - { kind: spell, name: "harv atk 4", element: energy, subtype: anim-harv-atk-4 }
+  - { kind: spell, name: "harv atk 5", element: energy, subtype: anim-harv-atk-5 }
+  - { kind: spell, name: "harv atk 6", element: energy, subtype: anim-harv-atk-6 }
+  - { kind: spell, name: "harv atk 7", element: energy, subtype: anim-harv-atk-7 }

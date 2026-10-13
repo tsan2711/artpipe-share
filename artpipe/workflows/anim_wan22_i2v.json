@@ -1,0 +1,282 @@
+{
+  "1": {
+    "class_type": "UnetLoaderGGUF",
+    "inputs": {
+      "unet_name": "{{HIGH}}"
+    },
+    "_meta": {
+      "title": "WAN 2.2 high-noise (GGUF)"
+    }
+  },
+  "3": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "shift": 8
+    },
+    "_meta": {
+      "title": "Model sampling (high)"
+    }
+  },
+  "4": {
+    "class_type": "UnetLoaderGGUF",
+    "inputs": {
+      "unet_name": "{{LOW}}"
+    },
+    "_meta": {
+      "title": "WAN 2.2 low-noise (GGUF)"
+    }
+  },
+  "6": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "shift": 8
+    },
+    "_meta": {
+      "title": "Model sampling (low)"
+    }
+  },
+  "7": {
+    "class_type": "CLIPLoaderGGUF",
+    "inputs": {
+      "clip_name": "{{TEXT_ENCODER}}",
+      "type": "wan"
+    },
+    "_meta": {
+      "title": "UMT5 XXL (GGUF)"
+    }
+  },
+  "8": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "{{VAE}}"
+    },
+    "_meta": {
+      "title": "WAN 2.1 VAE (14B i2v dùng VAE 2.1, không phải 2.2)"
+    }
+  },
+  "9": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "7",
+        0
+      ],
+      "text": "{{PROMPT}}"
+    },
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "10": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "7",
+        0
+      ],
+      "text": "{{NEGATIVE}}"
+    },
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "11": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "{{IMAGE}}"
+    },
+    "_meta": {
+      "title": "Anchor (nhân vật, nền phẳng)"
+    }
+  },
+  "13": {
+    "class_type": "WanImageToVideo",
+    "inputs": {
+      "positive": [
+        "9",
+        0
+      ],
+      "negative": [
+        "10",
+        0
+      ],
+      "vae": [
+        "8",
+        0
+      ],
+      "width": "{{WIDTH}}",
+      "height": "{{HEIGHT}}",
+      "length": "{{LENGTH}}",
+      "batch_size": 1,
+      "start_image": [
+        "11",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "WAN i2v conditioning"
+    }
+  },
+  "14": {
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "model": [
+        "3",
+        0
+      ],
+      "add_noise": "enable",
+      "noise_seed": "{{SEED}}",
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": [
+        "13",
+        0
+      ],
+      "negative": [
+        "13",
+        1
+      ],
+      "latent_image": [
+        "13",
+        2
+      ],
+      "start_at_step": 0,
+      "end_at_step": 2,
+      "return_with_leftover_noise": "enable"
+    },
+    "_meta": {
+      "title": "Stage 1 (high noise)"
+    }
+  },
+  "15": {
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "model": [
+        "6",
+        0
+      ],
+      "add_noise": "disable",
+      "noise_seed": "{{SEED}}",
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": [
+        "13",
+        0
+      ],
+      "negative": [
+        "13",
+        1
+      ],
+      "latent_image": [
+        "14",
+        0
+      ],
+      "start_at_step": 2,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable"
+    },
+    "_meta": {
+      "title": "Stage 2 (low noise)"
+    }
+  },
+  "16": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "15",
+        0
+      ],
+      "vae": [
+        "8",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Decode"
+    }
+  },
+  "17": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "16",
+        0
+      ],
+      "filename_prefix": "{{PREFIX_RAW}}"
+    },
+    "_meta": {
+      "title": "frames raw"
+    }
+  },
+  "20": {
+    "class_type": "BiRefNetRMBG",
+    "inputs": {
+      "image": [
+        "16",
+        0
+      ],
+      "model": "{{RMBG}}",
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "invert_output": false,
+      "refine_foreground": true,
+      "background": "Alpha"
+    },
+    "_meta": {
+      "title": "BiRefNet tách nền"
+    }
+  },
+  "21": {
+    "class_type": "InvertMask",
+    "inputs": {
+      "mask": [
+        "20",
+        1
+      ]
+    },
+    "_meta": {
+      "title": "Đảo mask (JoinImageWithAlpha coi 1 = trong suốt)"
+    }
+  },
+  "22": {
+    "class_type": "JoinImageWithAlpha",
+    "inputs": {
+      "image": [
+        "20",
+        0
+      ],
+      "alpha": [
+        "21",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "RGBA (màu đã refine_foreground từ BiRefNet, alpha từ mask)"
+    }
+  },
+  "23": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "22",
+        0
+      ],
+      "filename_prefix": "{{PREFIX_RGBA}}"
+    },
+    "_meta": {
+      "title": "frames rgba"
+    }
+  }
+}

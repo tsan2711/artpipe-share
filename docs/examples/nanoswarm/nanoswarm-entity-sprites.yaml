@@ -1,0 +1,16 @@
+# NanoSwarm entity-sprite manifest — top-down game-object views.
+# Rendered as DrawMeshInstancedIndirect quads in BotInstanced shader (Texture2DArray, layers 0-3).
+# Separate from HUD icons (nanoswarm-icons.yaml). Output → out-entities/icons/.
+
+icons:
+  # ── Player bots (Texture2DArray layer 0-2) ──
+  - { kind: spell, name: Harvester, element: energy, subtype: ent-harvester }
+  - { kind: spell, name: Builder,   element: tech,   subtype: ent-builder }
+  - { kind: spell, name: Defender,  element: core,   subtype: ent-defender }
+
+  # ── Rival bot (layer 3) ──
+  - { kind: spell, name: Rival,     element: matter, subtype: ent-rival }
+
+  # ── World objects (SpriteRenderer — not in Texture2DArray) ──
+  - { kind: spell, name: Core,      element: core,   subtype: ent-core }
+  - { kind: spell, name: EnergyNode, element: energy, subtype: ent-node }
