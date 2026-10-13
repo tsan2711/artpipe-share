@@ -1,0 +1,15 @@
+{
+  "_ghi_chu": "Bộ icon UI cho game idle/casual.",
+  "preset": "cute-icons",
+  "variants": 3,
+  "icons": [
+    { "name": "Home",        "prompt": "a cute little house with a round window and a chimney", "element": "pink" },
+    { "name": "Shop",        "prompt": "a shopping bag with a round handle and a heart tag", "element": "pink" },
+    { "name": "Mail",        "prompt": "one envelope with a heart seal", "element": "red" },
+    { "name": "Quest",       "prompt": "one rolled paper scroll with a ribbon and a check mark", "element": "gold" },
+    { "name": "Leaderboard", "prompt": "a golden trophy cup with two round handles and a star", "element": "gold" },
+    { "name": "Friends",     "prompt": "two round smiley faces side by side", "element": "blue" },
+    { "name": "Lock",        "prompt": "one chunky padlock with a round keyhole", "element": "purple" },
+    { "name": "Ad Reward",   "prompt": "a rounded rectangle screen with a big play triangle in the middle", "element": "green" }
+  ]
+}

@@ -54,6 +54,40 @@ Trong ô cấu hình (`MY_ICONS`) hoặc trong `presets/<preset>/icons.yaml`:
 
 Mẹo prompt và cách xử lý ảnh hỏng: [QUY-TRINH.md](QUY-TRINH.md).
 
+## File ý tưởng (JSON) — một file = một mẻ
+
+Gom preset + cài đặt + danh sách icon vào **một file JSON** (mẫu trong `jobs/`):
+
+```json
+{
+  "preset": "cute-icons",
+  "variants": 3,
+  "seed": 1000,
+  "icons": [
+    { "name": "Health Potion", "prompt": "one round glass potion flask with a cork, glowing liquid inside", "element": "red" },
+    { "name": "Bomb", "prompt": "one round black bomb with a short lit fuse and a spark" }
+  ]
+}
+```
+
+- Notebook: ô cấu hình → `JOB = "jobs/rpg-shop.json"`, hoặc `JOB = "upload"` (Colab: chọn file từ máy),
+  hoặc Kaggle: upload file thành Dataset rồi `JOB = "/kaggle/input/<dataset>/<file>.json"`.
+- Dòng lệnh: `python3 generate.py --job jobs/rpg-shop.json` (cờ dòng lệnh như `--only` vẫn ghi đè được file).
+- Khoá: `preset` (bắt buộc — tên thư mục trong `presets/`), `variants`, `seed`, `only`, `icons` (bắt buộc).
+  Khoá bắt đầu bằng `_` (vd `_ghi_chu`) bị bỏ qua. Viết YAML thay JSON cũng được.
+- Mẫu: `rpg-shop` (item RPG) · `idle-ui` (icon UI) · `monsters` (quái chibi) · `skills` (icon kỹ năng vector).
+
+## Tất cả file cấu hình
+
+| File | Ai sửa | Chứa gì |
+|---|---|---|
+| `jobs/*.json` | người dùng, mỗi mẻ | preset nào + bao nhiêu biến thể + danh sách ý tưởng icon |
+| ô ⚙️ Cấu hình trong notebook | người dùng, mỗi lần chạy | `PRESET` / `JOB` / `VARIANTS` / `ONLY` / `MY_ICONS` |
+| `presets/<p>/icons.yaml` | ai làm preset | danh sách mẫu của preset (dùng khi không có JOB / MY_ICONS) |
+| `presets/<p>/art-direction.md` | ai làm preset, hiếm khi | phong cách: bảng màu, câu tả phong cách, negative prompt, viền, cỡ xuất, ngưỡng chấm |
+| `presets/<p>/preset.yaml` | ai làm preset, hiếm khi | model + link tải, graph ComfyUI, cỡ sinh, biến thể/seed mặc định |
+| `artpipe/workflows/*.json` | hầu như không | graph ComfyUI (sampler, steps, cfg, LoRA) — sửa trong ComfyUI rồi *Export (API)* |
+
 ## Chạy ở máy khác (không phải Colab/Kaggle)
 
 ```bash
@@ -72,6 +106,7 @@ ComfyUI tự dựng (Windows/máy khác) phải có đúng model + LoRA ghi tron
 artpipe.ipynb       notebook Colab + Kaggle (dựng bởi tools/build_notebook.py, code nhúng sẵn)
 generate.py         MỘT lệnh: dựng ComfyUI → tải model → sinh → tách nền → chấm → chọn → xuất → zip
 setup_comfy.sh      dựng ComfyUI trên Linux GPU (generate.py tự gọi)
+jobs/*.json         file ý tưởng mẫu: preset + cài đặt + danh sách icon trong một file
 presets/<tên>/      art-direction.md (phong cách, bảng màu, luật chấm) · icons.yaml (danh sách) · preset.yaml (model)
 artpipe/            lõi pipeline: prompt, gọi ComfyUI, tách nền, ép viền, chấm điểm, trang duyệt
   workflows/        graph ComfyUI (API format)

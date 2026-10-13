@@ -1,0 +1,16 @@
+{
+  "_ghi_chu": "File ý tưởng: 1 file = 1 mẻ. preset = tên thư mục trong presets/. Các khoá bắt đầu bằng _ bị bỏ qua.",
+  "preset": "cute-icons",
+  "variants": 3,
+  "seed": 1000,
+  "icons": [
+    { "name": "Health Potion", "prompt": "one round glass potion flask with a cork, glowing liquid inside", "element": "red" },
+    { "name": "Mana Potion",   "prompt": "one tall thin glass bottle with a star stopper, glowing liquid inside", "element": "blue" },
+    { "name": "Iron Sword",    "prompt": "one chunky short toy sword, silver blade, round guard" },
+    { "name": "Wooden Shield", "prompt": "one round wooden shield with iron rim and rivets" },
+    { "name": "Magic Scroll",  "prompt": "one rolled paper scroll tied with a ribbon, a small glowing rune on it", "element": "purple" },
+    { "name": "Coin Pouch",    "prompt": "one small leather pouch tied with a string, gold coins peeking out", "element": "gold" },
+    { "name": "Apple",         "prompt": "one shiny apple with a small leaf", "element": "red" },
+    { "name": "Bomb",          "prompt": "one round black bomb with a short lit fuse and a spark" }
+  ]
+}

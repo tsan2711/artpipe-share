@@ -1,0 +1,13 @@
+{
+  "_ghi_chu": "Icon kỹ năng phẳng — preset vector-icons (element: fire frost lightning arcane nature holy). Prompt ngắn: preset khoá 77 token.",
+  "preset": "vector-icons",
+  "variants": 4,
+  "icons": [
+    { "name": "Meteor",      "prompt": "a flaming rock falling diagonally with a fire trail", "element": "fire" },
+    { "name": "Ice Spike",   "prompt": "three sharp ice crystals bursting up from the ground", "element": "frost" },
+    { "name": "Thunder",     "prompt": "a lightning bolt striking down from a small cloud", "element": "lightning" },
+    { "name": "Vine Trap",   "prompt": "thorny vines curling into a loop", "element": "nature" },
+    { "name": "Blessing",    "prompt": "a glowing halo above open hands", "element": "holy" },
+    { "name": "Curse",       "prompt": "a cracked skull with a swirling mark", "element": "arcane" }
+  ]
+}

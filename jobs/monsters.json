@@ -1,0 +1,14 @@
+{
+  "_ghi_chu": "Quái chibi cho game 2D — preset chibi-sprites.",
+  "preset": "chibi-sprites",
+  "variants": 3,
+  "seed": 3000,
+  "icons": [
+    { "name": "Blue Slime",    "prompt": "a round bouncy slime monster with big shiny eyes and a happy smile", "element": "blue" },
+    { "name": "Goblin",        "prompt": "a tiny green goblin with big pointy ears holding a small wooden club, mischievous grin" },
+    { "name": "Skeleton",      "prompt": "a tiny cute skeleton with a round skull holding a bone, silly smile" },
+    { "name": "Fire Spirit",   "prompt": "a small floating flame spirit with big eyes and tiny arms", "element": "red" },
+    { "name": "Treant",        "prompt": "a small walking tree stump monster with leaves on top and sleepy eyes", "element": "green" },
+    { "name": "Baby Dragon",   "prompt": "a chubby baby dragon with tiny wings and a round belly, sitting", "element": "purple" }
+  ]
+}

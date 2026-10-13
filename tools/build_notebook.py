@@ -24,7 +24,7 @@ NB = ROOT / "artpipe.ipynb"
 REPO = "tsan2711/artpipe-share"
 
 INCLUDE = ["generate.py", "setup_comfy.sh", "requirements.txt", "tools/pack_atlas.py"]
-INCLUDE_DIRS = [("artpipe", ("*.py", "workflows/*.json", "themes/*.yaml")), ("presets", ("**/*",))]
+INCLUDE_DIRS = [("artpipe", ("*.py", "workflows/*.json", "themes/*.yaml")), ("presets", ("**/*",)), ("jobs", ("*.json", "*.yaml"))]
 
 
 def files() -> list[Path]:
@@ -78,6 +78,8 @@ INTRO = f"""
 Lần đầu mỗi phiên mất ~5–8 phút dựng máy + tải model (~7GB), sau đó ~20–40 giây/ảnh trên T4.
 Chạy lại ô **🚀 Sinh** trong cùng phiên thì không phải dựng lại.
 
+Có sẵn danh sách ý tưởng dạng JSON? Đặt `JOB` trong ô cấu hình (mẫu ở `jobs/`, hoặc `upload`).
+
 Quy trình đầy đủ, cách viết prompt, cách tạo preset riêng: xem `README.md` và `QUY-TRINH.md` trong repo.
 """
 
@@ -87,6 +89,7 @@ PRESET   = "cute-icons"   #@param ["cute-icons", "vector-icons", "chibi-sprites"
 VARIANTS = 0              #@param {type:"integer"}
 ONLY     = ""             #@param {type:"string"}
 SAVE_TO_DRIVE = False     #@param {type:"boolean"}
+JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json", "jobs/monsters.json", "jobs/skills.json", "upload"] {allow-input: true}
 
 # PRESET   cute-icons    = icon item/UI anime dễ thương (Animagine XL)
 #          vector-icons  = icon kỹ năng vector phẳng (SDXL + LoRA vector)
@@ -94,6 +97,9 @@ SAVE_TO_DRIVE = False     #@param {type:"boolean"}
 # VARIANTS số phương án mỗi icon (0 = theo preset, thường 3–4)
 # ONLY     chỉ sinh icon có tên chứa chuỗi này (vd "potion"); để trống = cả danh sách
 # SAVE_TO_DRIVE  (Colab) chép thêm file zip vào Google Drive/artpipe/
+# JOB      file ý tưởng JSON (preset + số biến thể + danh sách icon trong MỘT file) — có JOB thì bỏ qua PRESET/MY_ICONS.
+#          "jobs/..." = mẫu trong repo · "upload" = (Colab) chọn file .json từ máy
+#          · đường dẫn bất kỳ, vd Kaggle: "/kaggle/input/<dataset>/my-job.json"
 
 # Danh sách icon CỦA BẠN (YAML). Để trống = dùng danh sách mẫu của preset.
 # Mỗi dòng: name = tên file · prompt = mô tả HÌNH bằng tiếng Anh · element = màu trong preset (tuỳ chọn)
@@ -163,13 +169,27 @@ RUN = """
 import subprocess, sys, time, glob
 from pathlib import Path
 
-args = [sys.executable, '-u', str(CODE / 'generate.py'), '--preset', str(CODE / 'presets' / PRESET)]
+job = JOB.strip()
+if job == 'upload':
+    from google.colab import files as _f
+    up = _f.upload()   # chọn file .json
+    name = next(iter(up))
+    job = str(CODE / 'out' / name)
+    Path(job).parent.mkdir(parents=True, exist_ok=True)
+    Path(job).write_bytes(up[name])
+elif job and not Path(job).is_absolute():
+    job = str(CODE / job)
+if job:
+    args = [sys.executable, '-u', str(CODE / 'generate.py'), '--job', job]
+    print('dùng file ý tưởng:', job)
+else:
+    args = [sys.executable, '-u', str(CODE / 'generate.py'), '--preset', str(CODE / 'presets' / PRESET)]
 if VARIANTS:
     args += ['--variants', str(VARIANTS)]
 if ONLY.strip():
     args += ['--only', ONLY.strip()]
 icons_text = '\\n'.join(l for l in MY_ICONS.splitlines() if l.strip() and not l.strip().startswith('#'))
-if icons_text:
+if icons_text and not job:
     custom = CODE / 'out' / 'my-icons.yaml'
     custom.parent.mkdir(parents=True, exist_ok=True)
     custom.write_text('icons:\\n' + '\\n'.join('  ' + l.strip() for l in icons_text.splitlines()), 'utf-8')
@@ -184,9 +204,7 @@ p.wait()
 print(f'\\n⏱  {(time.time() - t0) / 60:.1f} phút')
 if p.returncode != 0:
     raise RuntimeError(f'❌ generate.py lỗi (mã {p.returncode}) — đọc dòng đỏ phía trên')
-OUT = Path(sorted(glob.glob(str(CODE / 'out' / f'{PRESET}-*')), key=lambda s: Path(s).stat().st_mtime)[-1])
-if OUT.suffix == '.zip':
-    OUT = OUT.with_suffix('')
+OUT = Path(max(glob.glob(str(CODE / 'out' / '*' / 'report.json')), key=lambda s: Path(s).stat().st_mtime)).parent
 print('kết quả:', OUT)
 """
 

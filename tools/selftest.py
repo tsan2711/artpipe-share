@@ -78,6 +78,15 @@ def test_presets() -> None:
         check(not errs, f"{p.name}: mọi icon dựng được prompt {errs[:2] if errs else ''}")
 
 
+def test_jobs() -> None:
+    print("[1b] file ý tưởng (jobs/)")
+    for j in sorted((ROOT / "jobs").glob("*.json")):
+        r = subprocess.run([sys.executable, str(ROOT / "generate.py"), "--job", str(j), "--dry-run"],
+                           capture_output=True, text=True)
+        check(r.returncode == 0, f"{j.name}: dựng được prompt mọi icon"
+              + ("" if r.returncode == 0 else "\n" + (r.stdout + r.stderr)[-800:]))
+
+
 class FakeComfy(http.server.BaseHTTPRequestHandler):
     image = b""
     prompts: list[dict] = []
@@ -154,6 +163,7 @@ def test_notebook() -> None:
 
 def main() -> int:
     test_presets()
+    test_jobs()
     test_end_to_end()
     test_notebook()
     print(f"\n{'XANH' if not FAILS else f'ĐỎ — {len(FAILS)} lỗi'}")

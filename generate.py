@@ -4,11 +4,12 @@
     python3 generate.py --preset presets/cute-icons                 # cả preset
     python3 generate.py --preset presets/cute-icons --only potion   # một icon (khớp chuỗi con)
     python3 generate.py --preset presets/cute-icons --icons my.yaml # danh sách icon riêng
+    python3 generate.py --job jobs/rpg-shop.json                    # file ý tưởng: preset + cài đặt + danh sách
     python3 generate.py --preset presets/cute-icons --dry-run       # chỉ in prompt, không cần GPU
     python3 generate.py --preset presets/cute-icons --host http://1.2.3.4:8188   # ComfyUI có sẵn ở nơi khác
     python3 generate.py --preset presets/cute-icons --ingest out/cute-icons-1/raw  # chỉ chạy lại hậu kỳ
 
-Đầu ra: out/<preset>-<giờ>/
+Đầu ra: out/<preset hoặc tên job>-<giờ>/
     best/<slug>.png         biến thể tốt nhất mỗi icon (512px, nền trong)  ← thứ thường cần
     export/<slug>_<cỡ>.png  best thu về các cỡ trong art-direction icon.export
     atlas.png + atlas.json  ghép mọi best thành 1 tấm (sprite sheet)
@@ -156,7 +157,9 @@ def run_py(args: list[str], env: dict) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--preset", type=Path, required=True, help="thư mục preset (presets/cute-icons)")
+    ap.add_argument("--job", type=Path, default=None,
+                    help="file ý tưởng .json/.yaml: {preset, variants, seed, only, icons:[...]} — xem jobs/")
+    ap.add_argument("--preset", type=Path, default=None, help="thư mục preset (presets/cute-icons)")
     ap.add_argument("--icons", type=Path, default=None, help="danh sách icon riêng (mặc định <preset>/icons.yaml)")
     ap.add_argument("--only", default=None, help="chỉ sinh icon có tên file chứa chuỗi này")
     ap.add_argument("--variants", type=int, default=None, help="số biến thể mỗi icon (mặc định theo preset)")
@@ -171,6 +174,20 @@ def main() -> int:
     ap.add_argument("--no-zip", action="store_true")
     args = ap.parse_args()
 
+    if args.job:
+        # File ý tưởng = một mẻ trọn gói. Cờ dòng lệnh vẫn thắng (để thử nhanh --only mà không sửa file).
+        job = yaml.safe_load(args.job.read_text("utf-8"))  # YAML đọc được cả JSON
+        if not isinstance(job, dict) or not isinstance(job.get("icons"), list):
+            raise SystemExit(f"{RED}{args.job}: cần một object có khoá \"icons\": [...]{RESET}")
+        if args.preset is None and job.get("preset"):
+            p = Path(job["preset"])
+            args.preset = p if p.is_dir() else HERE / "presets" / p
+        args.icons = args.icons or args.job
+        for k in ("variants", "seed", "only"):
+            if getattr(args, k) is None and job.get(k) not in (None, "", 0):
+                setattr(args, k, job[k])
+    if args.preset is None:
+        raise SystemExit(f"{RED}cần --preset hoặc --job có khoá \"preset\"{RESET}")
     preset_dir = args.preset.resolve()
     spec = preset_dir / "art-direction.md"
     icons = (args.icons or preset_dir / "icons.yaml").resolve()
@@ -206,7 +223,8 @@ def main() -> int:
         return 0
 
     stamp = datetime.now().strftime("%m%d-%H%M")
-    out = (args.out or HERE / "out" / f"{preset_dir.name}-{stamp}").resolve()
+    name = args.job.stem if args.job else preset_dir.name
+    out = (args.out or HERE / "out" / f"{name}-{stamp}").resolve()
     out.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, ARTPIPE_PROJECT=str(preset_dir), PYTHONUNBUFFERED="1")
 
