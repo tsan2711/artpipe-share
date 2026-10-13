@@ -1,0 +1,11 @@
+# Thousandfold — manifest con vật ứng viên cho hướng B, chạy qua artpipe (run.py --catalog), giống nanoswarm-icons.yaml.
+# Mỗi kiểu một màu khác nhau trong palette để xem luôn màu nào nổi trên nền xám.
+icons:
+  - { kind: spell, name: Wisp,   element: sun,    subtype: cr-wisp }
+  - { kind: spell, name: Drop,   element: coral,  subtype: cr-drop }
+  - { kind: spell, name: Crayon, element: violet, subtype: cr-crayon }
+  - { kind: spell, name: Sprout, element: mint,   subtype: cr-sprout }
+  - { kind: spell, name: Brush,  element: coral,  subtype: cr-brush }
+  - { kind: spell, name: Chick,  element: sun,    subtype: cr-chick }
+  - { kind: spell, name: Star,   element: violet, subtype: cr-star }
+  - { kind: spell, name: Jelly,  element: mint,   subtype: cr-jelly }

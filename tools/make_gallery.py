@@ -18,6 +18,7 @@ SETS = [
     ("kawaii-doodle", "kawaii-doodle", ((255, 240, 228), (255, 226, 236)), (255, 252, 248)),
     ("gacha-chibi", "gacha-chibi", ((222, 236, 255), (236, 226, 255)), (255, 255, 255)),
     ("pastel-rpg", "pastel-rpg", ((44, 36, 66), (70, 46, 84)), (58, 50, 82)),
+    ("mascot-creatures", "mascot-creatures", ((122, 122, 128), (98, 98, 106)), (138, 138, 146)),
 ]
 CARD, GAP, PAD = 168, 18, 28
 
@@ -47,7 +48,7 @@ def strip(folder: str, title: str, bg, card_col) -> Image.Image:
     w = PAD * 2 + n * CARD + (n - 1) * GAP
     h = head + CARD + 26 + PAD
     img = gradient(w, h, *bg).convert("RGBA")
-    dark = sum(bg[0]) < 300
+    dark = sum(bg[0]) < 420
     ink = (250, 246, 255) if dark else (70, 52, 74)
     d = ImageDraw.Draw(img)
     d.text((PAD, 16), title, font=font(26), fill=ink)

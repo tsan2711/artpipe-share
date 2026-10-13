@@ -6,6 +6,11 @@ sprite sheet. Chạy trên GPU miễn phí của Google Colab hoặc Kaggle — 
 ![kawaii-doodle](docs/samples/kawaii-doodle.png)
 ![gacha-chibi](docs/samples/gacha-chibi.png)
 ![pastel-rpg](docs/samples/pastel-rpg.png)
+![mascot-creatures](docs/samples/mascot-creatures.png)
+
+<img src="docs/samples/vfx-flipbooks.gif" width="49%"> <img src="docs/examples/thousandfold/images/frame-petal.jpg" width="49%">
+
+*Trái: 19 VFX flipbook vẽ bằng code (`vfx/`, không cần GPU). Phải: style frame Thousandfold — cảnh AI làm xám + bầy hạt vẽ bằng code.*
 
 *Mọi ảnh trên đều do AI vẽ, chưa sửa tay pixel nào. Nguồn từng bộ: [Bộ sưu tập](#bộ-sưu-tập).*
 
@@ -14,6 +19,7 @@ sprite sheet. Chạy trên GPU miễn phí của Google Colab hoặc Kaggle — 
 | **`kawaii-doodle`** ⭐ | icon "bánh bao" vẽ tay: viền nâu dày, màu phẳng, mặt chấm + má hồng, bóng dưới chân | Animagine XL 4.0 |
 | **`gacha-chibi`** ⭐ | nhân vật chibi kiểu game gacha mobile — đúng câu lệnh của NanoSwarm | Animagine XL 4.0 |
 | **`pastel-rpg`** ⭐ | icon item / spell RPG pastel — đúng theme của June (Skyborne) | Animagine XL 4.0 |
+| **`mascot-creatures`** ⭐ | sinh vật mascot vector phẳng, viền dày — đúng spec của Thousandfold | SDXL + LoRA DD-vector-v2 |
 | `cute-icons` | icon item / tiền tệ / UI kiểu anime dễ thương | Animagine XL 4.0 |
 | `vector-icons` | icon kỹ năng / spell / buff vector phẳng, viền đậm | SDXL + LoRA DD-vector-v2 |
 | `chibi-sprites` | nhân vật / quái / pet chibi toàn thân | Animagine XL 4.0 |
@@ -109,10 +115,20 @@ BiRefNet tách nền → hậu kỳ cả chuỗi (một hộp cắt chung, pivot
 - Nặng: lần đầu tải ~24GB, mỗi clip ~10–20 phút trên T4. **Dùng Kaggle** (RAM 29GB) — Colab free 12.7GB RAM có thể thiếu.
 - ⚠️ Làn này đã chạy trên máy render cũ (PC 16GB) và trên Colab/Kaggle qua notebook cũ, **chưa chạy lại bằng repo này**.
 
-## Kho kiến thức + dữ liệu thật của hai game
+## VFX
+
+19 hiệu ứng flipbook + atlas particle **vẽ bằng code**, không cần GPU: [`vfx/README.md`](vfx/README.md).
+
+## Điểm neo (anchor) — đọc trước khi làm cả bộ
+
+[`docs/knowledge/anchors.md`](docs/knowledge/anchors.md): vì sao phải khoá ảnh đã duyệt làm neo, bốn loại neo, và cách
+June / NanoSwarm / Thousandfold / làn animation / VFX mỗi bên neo thế nào. Luật chính: **không sinh cả bộ trước khi có neo.**
+
+## Kho kiến thức + dữ liệu thật của ba game
 
 [`docs/README.md`](docs/README.md): bài học đã trả giá, cơ chế từng làn, và spec / manifest / script **thật** của NanoSwarm
-và June (gồm ~200 mô tả hình đã dùng, script img2img dựng anchor, prompt bộ gacha-chibi).
+, June và Thousandfold (gồm ~200 mô tả hình đã dùng, script img2img dựng anchor, prompt bộ gacha-chibi, key art + style
+frame, tài liệu VFX).
 
 ## Chạy ở máy khác (không phải Colab/Kaggle)
 
@@ -138,7 +154,8 @@ presets/<tên>/      art-direction.md (phong cách, bảng màu, luật chấm) 
 artpipe/            lõi pipeline: prompt, gọi ComfyUI, tách nền, ép viền, chấm điểm, trang duyệt
   workflows/        graph ComfyUI (API format): icon, anim Wan 2.2 (clip / vòng lặp), ảnh→mesh 3D
   anims/            manifest animation mẫu + anchor (điểm neo)
-docs/               kho kiến thức + dữ liệu thật của NanoSwarm / June (docs/README.md)
+vfx/                VFX flipbook vẽ bằng code (không GPU)
+docs/               kho kiến thức + dữ liệu thật của NanoSwarm / June / Thousandfold (docs/README.md)
 tools/              selftest.py · build_notebook.py · pack_atlas.py · make_gallery.py
 docs/samples/       ảnh mẫu của bộ sưu tập
 ```
@@ -163,6 +180,8 @@ Gốc: tách từ `sanne-kit/Tools/artpipe` (làn icon) — bản này chạy đ
 |---|---|---|---|---|
 | `kawaii-doodle` | repo này | Colab T4, 2026-10-13, vòng 4 (xem nhật ký dưới) | `kawaii-doodle` | ✅ có — ảnh trên chính là đầu ra |
 | `gacha-chibi` | game **NanoSwarm** — 12 Commander "Art B" | Animagine XL 4.0, txt2img, tách nền RMBG-2.0 (node ComfyUI), Bi chọn tay | `gacha-chibi` — **cùng** prefix/style/negative/prompt | ⚠️ chưa — khác duy nhất: repo dùng `rembg u2net` thay RMBG-2.0 |
+| `mascot-creatures` | game **Thousandfold** — 8 loài × 3 biến thể | artpipe gốc, SDXL + LoRA vector, Colab (run 38114816113) | `mascot-creatures` — **chép nguyên** spec + manifest của game | ⚠️ chưa — nhưng cùng code, cùng spec, cùng seed |
+| VFX flipbook | game **NanoSwarm** | vẽ bằng code (Pillow), không AI | `vfx/` | ✅ chạy được (selftest chạy mỗi lần) |
 | `pastel-rpg` | game **June (Skyborne)** — 21 icon spell/item/modifier | artpipe gốc, theme `cute-pastel`, Animagine XL 4.0 | `pastel-rpg` — **cùng** prefix/style/negative/bảng màu, thêm `white background` | ⚠️ chưa — prompt từng icon viết lại cho repo này |
 
 Hai bộ ⚠️ là **ảnh thật đã dùng trong game**, sinh bằng đúng model + câu lệnh của preset tương ứng, nhưng chưa

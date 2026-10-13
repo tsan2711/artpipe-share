@@ -67,6 +67,7 @@ INTRO = f"""
 ![kawaii-doodle](https://raw.githubusercontent.com/tsan2711/artpipe-share/main/docs/samples/kawaii-doodle.png)
 ![gacha-chibi](https://raw.githubusercontent.com/tsan2711/artpipe-share/main/docs/samples/gacha-chibi.png)
 ![pastel-rpg](https://raw.githubusercontent.com/tsan2711/artpipe-share/main/docs/samples/pastel-rpg.png)
+![mascot-creatures](https://raw.githubusercontent.com/tsan2711/artpipe-share/main/docs/samples/mascot-creatures.png)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/{REPO}/blob/main/artpipe.ipynb)
 
@@ -89,7 +90,7 @@ Quy trình đầy đủ, cách viết prompt, cách tạo preset riêng: xem `RE
 
 CONFIG = """
 #@title ⚙️ Cấu hình — sửa ở đây rồi Run all
-PRESET   = "kawaii-doodle" #@param ["kawaii-doodle", "gacha-chibi", "pastel-rpg", "cute-icons", "vector-icons", "chibi-sprites"]
+PRESET   = "kawaii-doodle" #@param ["kawaii-doodle", "gacha-chibi", "pastel-rpg", "mascot-creatures", "cute-icons", "vector-icons", "chibi-sprites"]
 VARIANTS = 0              #@param {type:"integer"}
 ONLY     = ""             #@param {type:"string"}
 SAVE_TO_DRIVE = False     #@param {type:"boolean"}
@@ -99,6 +100,7 @@ JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json"
 # PRESET   kawaii-doodle = icon "bánh bao" vẽ tay, mặt chấm + má hồng (Animagine XL) — đã chạy thử, có ảnh mẫu
 #          gacha-chibi   = nhân vật chibi kiểu gacha (câu lệnh của NanoSwarm)
 #          pastel-rpg    = icon item/spell RPG pastel (theme của June)
+#          mascot-creatures = sinh vật mascot vector phẳng (spec của Thousandfold, SDXL + LoRA vector)
 #          cute-icons    = icon item/UI anime màu tươi bóng loáng (Animagine XL)
 #          vector-icons  = icon kỹ năng vector phẳng (SDXL + LoRA vector)
 #          chibi-sprites = nhân vật / quái chibi toàn thân
@@ -114,7 +116,7 @@ JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json"
 # Danh sách icon CỦA BẠN (YAML). Để trống = dùng danh sách mẫu của preset.
 # Mỗi dòng: name = tên file · prompt = mô tả HÌNH bằng tiếng Anh · element = màu trong preset (tuỳ chọn)
 #   kawaii-doodle/cute-icons/chibi-sprites/gacha-chibi: gold red blue green purple pink
-#   pastel-rpg: fire frost lightning arcane hostile environment   ·   vector-icons: fire frost lightning arcane nature holy
+#   pastel-rpg: fire frost lightning arcane hostile environment   ·   mascot-creatures: coral sun mint violet   ·   vector-icons: fire frost lightning arcane nature holy
 MY_ICONS = '''
 # - { name: Magic Apple,  prompt: "one shiny red apple with a tiny golden leaf and sparkles", element: red }
 # - { name: Fishing Rod,  prompt: "one wooden fishing rod with a red and white bobber" }

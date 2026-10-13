@@ -167,6 +167,15 @@ def test_end_to_end() -> None:
     srv.shutdown()
 
 
+def test_vfx() -> None:
+    print("[2b] VFX vẽ bằng code")
+    with tempfile.TemporaryDirectory() as tmp:
+        r = subprocess.run([sys.executable, str(ROOT / "vfx" / "draw_vfx_sprites.py"), str(Path(tmp) / "c")],
+                           capture_output=True, text=True, env=dict(__import__("os").environ, VFX_OUT=tmp))
+        check(r.returncode == 0 and (Path(tmp) / "c" / "vfx_contact.png").exists(),
+              "draw_vfx_sprites.py chạy, ra contact sheet" + ("" if r.returncode == 0 else "\n" + r.stderr[-600:]))
+
+
 def test_notebook() -> None:
     print("[3] notebook")
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "build_notebook.py"), "--check"],
@@ -179,6 +188,7 @@ def main() -> int:
     test_jobs()
     test_anims()
     test_end_to_end()
+    test_vfx()
     test_notebook()
     print(f"\n{'XANH' if not FAILS else f'ĐỎ — {len(FAILS)} lỗi'}")
     return 1 if FAILS else 0
