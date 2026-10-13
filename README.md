@@ -3,8 +3,13 @@
 Viết danh sách icon bằng chữ → nhận về PNG nền trong, đã cắt nền, căn giữa, có viền, xuất sẵn nhiều cỡ +
 sprite sheet. Chạy trên GPU miễn phí của Google Colab hoặc Kaggle — **không cần cài gì, không cần token**.
 
+![kawaii-doodle](docs/samples/kawaii-doodle-preview-light.png)
+
+*Ảnh trên: preset `kawaii-doodle`, sinh thật trên Colab T4 — chưa sửa tay pixel nào (xem [Nhật ký chạy thử](#nhật-ký-chạy-thử)).*
+
 | Preset | Ra cái gì | Model |
 |---|---|---|
+| **`kawaii-doodle`** ⭐ | icon "bánh bao" vẽ tay: viền nâu dày, màu phẳng, mặt chấm + má hồng, bóng dưới chân — **đã chạy thử, có ảnh mẫu** | Animagine XL 4.0 |
 | `cute-icons` | icon item / tiền tệ / UI kiểu anime dễ thương | Animagine XL 4.0 |
 | `vector-icons` | icon kỹ năng / spell / buff vector phẳng, viền đậm | SDXL + LoRA DD-vector-v2 |
 | `chibi-sprites` | nhân vật / quái / pet chibi toàn thân | Animagine XL 4.0 |
@@ -126,3 +131,19 @@ Animagine XL 4.0 và SDXL base: CreativeML OpenRAIL++-M (dùng thương mại đ
 LoRA DD-vector-v2: huấn luyện trên ảnh CC0/public domain. Tự kiểm lại giấy phép trước khi đưa asset vào sản phẩm bán.
 
 Gốc: tách từ `sanne-kit/Tools/artpipe` (làn icon) — bản này chạy độc lập, không cần sanne-kit / Unity / GitHub runner.
+
+## Nhật ký chạy thử
+
+Chạy thật trên **Google Colab free, GPU T4**, ngày 2026-10-13. Mỗi vòng = sinh → nhìn bằng mắt → sửa preset → chạy lại.
+
+| Vòng | Preset | Ảnh | Thời gian | Tự chấm nhận | Nhìn bằng mắt | Sửa gì |
+|---|---|---|---|---|---|---|
+| 1 | `cute-icons` (bản đầu) | 12 icon × 2 | 17.9 phút (gồm ~8 phút dựng máy + tải model) | 14/24 | nền gradient pastel → tách nền ra rỗng ở 10 ảnh; màu nhạt; Heart ra quả táo, Settings ra mặt robot | prompt thêm `white background, simple background`; tag chất lượng chuẩn Animagine 4 |
+| — | thử 4 model tách nền trên 24 ảnh gốc | — | — | — | `u2net` cắt được cả 24 ảnh, 1.4 giây/ảnh; `isnet-general-use` 3.5 giây/ảnh và hụt vài ảnh; `birefnet` làm Colab hết RAM | mọi preset dùng `u2net` |
+| 2 | `cute-icons` (màu tươi) | 12 × 3 | 19.7 phút | 36/36 | 8/12 đẹp (gem, gift, coin, heart, potion, star, chest, energy); sword/key/settings vẫn lỗi hình | — (không dùng làm ảnh mẫu) |
+| 3 | `kawaii-doodle` (bản đầu) | 10 × 2 | 10.5 phút | 20/20 | đúng gu nhưng nhiều vật thành khối vuông/tròn chung chung, màu toàn hồng | bỏ "rounded chunky shape"; màu nhấn trọng số `(lilac purple colour:1.3)`; tả hình cụ thể |
+| 4 | **`kawaii-doodle`** | 10 × 2 | ~10 phút | 20/20 | **9/10 đạt** (ảnh trên). Coin vẫn ra khối tròn — cần tả kỹ hơn | → ảnh mẫu |
+
+Bài học đã ghi vào [QUY-TRINH.md](QUY-TRINH.md): luôn ép **nền trắng trơn** trong prompt; **"tự chấm nhận" ≠ đẹp** (chỉ kiểm nền/viền/cỡ, không kiểm đúng vật) — luôn nhìn `sheet.html`; tả **hình cụ thể**, đừng tả "dễ thương/tròn mập" (preset lo); màu yếu thì dùng trọng số `(màu:1.3)`.
+
+Preset `vector-icons` và `chibi-sprites` **chưa chạy thật** — coi là bản nháp, chạy thử nhỏ (`ONLY`, `VARIANTS = 2`) trước khi dùng.

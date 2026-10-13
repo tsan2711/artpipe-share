@@ -64,6 +64,8 @@ def code(src: str, hidden: bool = False) -> dict:
 INTRO = f"""
 # 🎨 artpipe — sinh icon & sprite 2D bằng AI (Colab / Kaggle)
 
+![mẫu](https://raw.githubusercontent.com/tsan2711/artpipe-share/main/docs/samples/kawaii-doodle-preview-light.png)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/{REPO}/blob/main/artpipe.ipynb)
 
 **Cách chạy (không cần cài gì):**
@@ -85,13 +87,14 @@ Quy trình đầy đủ, cách viết prompt, cách tạo preset riêng: xem `RE
 
 CONFIG = """
 #@title ⚙️ Cấu hình — sửa ở đây rồi Run all
-PRESET   = "cute-icons"   #@param ["cute-icons", "vector-icons", "chibi-sprites"]
+PRESET   = "kawaii-doodle" #@param ["kawaii-doodle", "cute-icons", "vector-icons", "chibi-sprites"]
 VARIANTS = 0              #@param {type:"integer"}
 ONLY     = ""             #@param {type:"string"}
 SAVE_TO_DRIVE = False     #@param {type:"boolean"}
 JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json", "jobs/monsters.json", "jobs/skills.json", "upload"] {allow-input: true}
 
-# PRESET   cute-icons    = icon item/UI anime dễ thương (Animagine XL)
+# PRESET   kawaii-doodle = icon "bánh bao" vẽ tay, mặt chấm + má hồng (Animagine XL) — đã chạy thử, có ảnh mẫu
+#          cute-icons    = icon item/UI anime màu tươi bóng loáng (Animagine XL)
 #          vector-icons  = icon kỹ năng vector phẳng (SDXL + LoRA vector)
 #          chibi-sprites = nhân vật / quái chibi toàn thân
 # VARIANTS số phương án mỗi icon (0 = theo preset, thường 3–4)
@@ -103,7 +106,7 @@ JOB      = ""             #@param ["", "jobs/rpg-shop.json", "jobs/idle-ui.json"
 
 # Danh sách icon CỦA BẠN (YAML). Để trống = dùng danh sách mẫu của preset.
 # Mỗi dòng: name = tên file · prompt = mô tả HÌNH bằng tiếng Anh · element = màu trong preset (tuỳ chọn)
-#   cute-icons/chibi-sprites: gold red blue green purple pink   ·   vector-icons: fire frost lightning arcane nature holy
+#   kawaii-doodle/cute-icons/chibi-sprites: gold red blue green purple pink   ·   vector-icons: fire frost lightning arcane nature holy
 MY_ICONS = '''
 # - { name: Magic Apple,  prompt: "one shiny red apple with a tiny golden leaf and sparkles", element: red }
 # - { name: Fishing Rod,  prompt: "one wooden fishing rod with a red and white bobber" }

@@ -10,17 +10,17 @@ icons:
   # ── Tiền tệ / tài nguyên ──
   - { name: Gold Coin,     subtype: coin, element: gold }
   - { name: Gem,           subtype: gem,  element: purple }
-  - { name: Energy,        prompt: "a glowing lightning bolt inside a round energy orb", element: blue }
-  - { name: Heart,         prompt: "one plump glossy heart with a small shine", element: red }
+  - { name: Energy,        prompt: "one yellow lightning bolt inside a round glowing orb", element: blue }
+  - { name: Heart,         prompt: "one big red heart symbol, plump and glossy", element: red }
 
   # ── Item ──
   - { name: Potion,        prompt: "one round glass potion flask with a cork, glowing liquid inside", element: pink }
-  - { name: Sword,         prompt: "one chunky short toy sword, silver blade, round guard", element: gold }
-  - { name: Shield,        prompt: "one round shield with a star emblem in the middle", element: blue }
+  - { name: Sword,         prompt: "one short sword pointing up, silver blade, gold cross guard, brown leather grip", element: gold }
+  - { name: Shield,        prompt: "one round knight shield with a metal rim and a gold star emblem", element: blue }
   - { name: Treasure Chest, prompt: "one small treasure chest slightly open with light glowing out", element: gold }
-  - { name: Key,           prompt: "one ornate old key with a round bow", element: gold }
+  - { name: Key,           prompt: "one ornate golden key with a round bow and square teeth", element: gold }
 
   # ── UI ──
-  - { name: Settings,      prompt: "a rounded cog gear with a soft glossy highlight", element: blue }
-  - { name: Star,          prompt: "one chubby five pointed star with a happy shine", element: gold }
-  - { name: Gift,          prompt: "a gift box with a big ribbon bow", element: pink }
+  - { name: Settings,      prompt: "one mechanical cog gear wheel with square teeth and a round hole in the middle", element: blue }
+  - { name: Star,          prompt: "one chubby five pointed star, glossy", element: gold }
+  - { name: Gift,          prompt: "one gift box with a big ribbon bow on top", element: pink }

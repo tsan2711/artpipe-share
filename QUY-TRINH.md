@@ -39,6 +39,9 @@ Luật prompt (đã trả giá mới biết):
 - **Hai icon khác nhau phải khác hình**, không chỉ khác màu — ở 64px chỉ còn thấy hình khối.
 - **Đừng nhắc màu nền.** "on pink background" làm chính vật thể ngả hồng (đã thấy: đồng vàng ra hồng).
 - Tả **hình khối**, không tả hành động: "a round bomb with a lit fuse" tốt hơn "a bomb exploding".
+- **Nền trắng trơn bắt buộc** (preset đã có `white background, simple background`). Nền gradient/màu → tách nền ra rỗng.
+- Màu ra sai/nhạt → nhấn trọng số trong `element_paint`: `"(lilac purple colour:1.3)"` (cú pháp ComfyUI, 1.1–1.4).
+- Tả **vật cụ thể** ("wooden treasure chest with a curved lid"), không tả "cute round chunky" — từ chung chung làm mọi icon thành cùng một khối.
 - Nhân vật: loài/nghề + 1 món đồ + màu chủ đạo + biểu cảm. "a tiny mage with a big pointy hat and a star wand, purple robe".
 
 Kiểm prompt trước khi tốn GPU: `python3 generate.py --preset presets/<p> --dry-run`.
@@ -62,7 +65,7 @@ Mở `sheet.html` trong zip (hoặc xem lưới trong notebook). Nhìn **cả m�
 | Hai icon trông như nhau | prompt quá giống nhau | tả lại HÌNH cho khác |
 | Ảnh đẹp nhưng sai vật | AI không biết vật đó | tả bằng hình khối đơn giản thay vì tên riêng |
 
-Chấm điểm chỉ kiểm **tuân thủ** (nền, viền, màu, đọc rõ ở 64px), không kiểm "có đúng là cái kiếm không".
+**Tự chấm "nhận" ≠ đẹp.** Đã thấy: 36/36 ảnh được nhận mà 4 icon sai vật. Chấm điểm chỉ kiểm **tuân thủ** (nền, viền, màu, đọc rõ ở 64px), không kiểm "có đúng là cái kiếm không".
 Mắt người vẫn phải duyệt.
 
 ## 5. Lấy kết quả

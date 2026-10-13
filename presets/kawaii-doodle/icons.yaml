@@ -1,0 +1,13 @@
+# Icon kiểu "bánh bao": preset tự thêm mặt chấm + má hồng + viền nâu + bóng dưới chân.
+# Tả HÌNH cụ thể (vật gì, hình gì) — đừng tả "tròn mập dễ thương", preset lo. Xem presets/cute-icons/icons.yaml.
+icons:
+  - { name: Coin,      subtype: coin, element: gold }
+  - { name: Gem,       subtype: gem,  element: purple }
+  - { name: Heart,     prompt: "one heart shape", element: red }
+  - { name: Potion,    prompt: "one round glass potion bottle with a cork and liquid inside", element: pink }
+  - { name: Star,      prompt: "one five pointed star shape", element: gold }
+  - { name: Chest,     prompt: "one wooden treasure chest with a curved lid and gold trim" }
+  - { name: Slime,     prompt: "one round jelly slime blob", element: green }
+  - { name: Mushroom,  prompt: "one small mushroom with a red cap with white spots and a short stem" }
+  - { name: Cloud,     prompt: "one fluffy cloud", element: blue }
+  - { name: Gift,      prompt: "one square gift box with a ribbon bow on top", element: blue }

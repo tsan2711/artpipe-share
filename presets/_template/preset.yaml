@@ -3,8 +3,8 @@ checkpoint: animagine-xl-4.0-opt.safetensors
 workflow: icon_anime.json          # trong artpipe/workflows/
 gen_size: 1024                     # SDXL vẽ ở 1024 rồi thu về canvas 512
 stylise: true                      # true = vẽ thêm viền đều (enforcement light giữ nguyên nét AI)
-variants: 4                        # số phương án mỗi icon (ghi đè bằng --variants)
-seed: 1000                         # seed gốc — cùng seed + cùng prompt = cùng ảnh
+variants: 3                        # số phương án mỗi icon (ghi đè bằng --variants)
+seed: 4000                         # seed gốc — cùng seed + cùng prompt = cùng ảnh
 downloads:                         # model cần có (bỏ qua nếu đã có)
   - url: https://huggingface.co/cagliostrolab/animagine-xl-4.0/resolve/main/animagine-xl-4.0-opt.safetensors
     dir: checkpoints

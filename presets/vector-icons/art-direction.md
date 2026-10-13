@@ -111,7 +111,7 @@ Prompt mỗi icon = `prompt_prefix` + mô tả hình (`prompt:` trong icons.yaml
 ```yaml
 generation:
   prompt_prefix: "vector, outlines, simple details, game icon,"
-  style_phrase: "flat 4-tone cel shading, bold dark outline, solid colours"
+  style_phrase: "flat colours, bold dark outline, simple shapes, white background"
   matte_method: segment
   segment_model: u2net
   max_prompt_tokens: 77

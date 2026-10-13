@@ -1,4 +1,4 @@
 # Khuôn: copy cả thư mục presets/_template → presets/<game-của-bạn>, rồi sửa 3 file. Xem QUY-TRINH.md §1.
 icons:
-  - { name: Example Coin, prompt: "one shiny round coin with a star stamped in the middle", element: gold }
-  - { name: Example Potion, prompt: "one round glass potion flask with a cork, glowing liquid inside", element: blue }
+  - { name: Example Heart, prompt: "one heart shape", element: red }
+  - { name: Example Chest, prompt: "one wooden treasure chest with a curved lid and gold trim" }

@@ -101,6 +101,7 @@ def post_process(raw_path: Path, entry: catalog.Entry, prompt_text: str, art: di
             raw_scores = {r.check_id: r.value
                           for r in checks.run_all(pre, art, entry.descriptor.kind)}
             img = stylise.cel(img, art, entry.descriptor.kind, entry.descriptor.element)
+            img = stylise.ground_shadow(img, art)
         img.save(icon_path)
         results = checks.run_all(icon_path, art, entry.descriptor.kind)
 

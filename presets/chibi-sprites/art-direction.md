@@ -1,7 +1,7 @@
 # Preset: chibi-sprites — nhân vật / quái chibi toàn thân
 
-Phong cách: nhân vật chibi toàn thân (đầu to, thân nhỏ), nhìn chéo 3/4, viền sạch, màu tươi.
-Model: `animagine-xl-4.0-opt`. Tách nền: `rembg isnet-anime`.
+Phong cách: nhân vật chibi toàn thân (đầu to, thân nhỏ), đứng, nhìn chéo 3/4, viền tối dày, màu tươi bão hoà.
+Model: `animagine-xl-4.0-opt`. Tách nền: `rembg u2net`.
 
 Hợp với: sprite nhân vật / quái / NPC / pet tĩnh cho game 2D, avatar, chân dung trong shop/gacha.
 Sprite tĩnh (1 khung). Ghép nhiều sprite thành atlas: `python3 tools/pack_atlas.py out/<mẻ>/best`.
@@ -24,12 +24,12 @@ máy sinh đọc câu tả ở `element_paint` (nó không hiểu mã hex).
 
 ```yaml
 palette:
-  gold:   { main: "#FFD166", core: "#FFF6D6", shadow: "#D49A2A", hue: 42 }
-  red:    { main: "#FF7A7A", core: "#FFE3E0", shadow: "#D04848", hue: 0 }
-  blue:   { main: "#6EC8FF", core: "#E6F7FF", shadow: "#3A8CC8", hue: 205 }
-  green:  { main: "#7EE08A", core: "#EAFFEC", shadow: "#3FA552", hue: 128 }
-  purple: { main: "#C49FFF", core: "#F5EEFF", shadow: "#8257D4", hue: 265 }
-  pink:   { main: "#FF9CCB", core: "#FFEAF4", shadow: "#D45C95", hue: 330 }
+  gold:   { main: "#FFC530", core: "#FFF1B8", shadow: "#C77F12", hue: 44 }
+  red:    { main: "#F2414B", core: "#FFC2B8", shadow: "#A3192B", hue: 355 }
+  blue:   { main: "#3FA9F5", core: "#C8ECFF", shadow: "#1F5FAF", hue: 205 }
+  green:  { main: "#47C95A", core: "#C9F7B8", shadow: "#1F7A3A", hue: 128 }
+  purple: { main: "#9B5CF6", core: "#E3CCFF", shadow: "#5B2BA8", hue: 265 }
+  pink:   { main: "#FF5FA8", core: "#FFD0E6", shadow: "#C2286E", hue: 330 }
   outline: "#4A3A52"
   neutral:
     light: "#FFF6EC"
@@ -110,24 +110,24 @@ Prompt mỗi icon = `prompt_prefix` + mô tả hình (`prompt:` trong icons.yaml
 
 ```yaml
 generation:
-  prompt_prefix: "masterpiece, best quality, solo, chibi, full body, game sprite,"
-  style_phrase: "big head small body, three quarter view, clean thick outline, bright colours, soft cel shading"
+  prompt_prefix: "masterpiece, high score, great score, absurdres, solo, chibi, full body, game character sprite,"
+  style_phrase: "big head small body, standing, three quarter view, thick dark outline, vibrant saturated colours, cel shading, white background, simple background"
   matte_method: segment
-  segment_model: isnet-anime
+  segment_model: u2net
   max_prompt_tokens: 0
-  negative_prompt: "dark, gloomy, horror, washed out, desaturated, photograph, 3d render, realistic, drop shadow, text, watermark, logo, frame, border, busy background, multiple objects, sticker, white border, die-cut outline, lowres, blurry, jpeg artifacts, character sheet, multiple views, reference sheet, turnaround, cropped, cut off feet, bad anatomy, extra limbs"
+  negative_prompt: "lowres, worst quality, low quality, low score, bad score, average score, blurry, jpeg artifacts, signature, watermark, username, text, logo, frame, border, gradient background, colorful background, busy background, scenery, pastel, washed out, pale, desaturated, photograph, 3d render, realistic, multiple views, character sheet, reference sheet, turnaround, cropped, cut off feet, bad anatomy, extra limbs, multiple characters, sticker, white border"
 ```
 
 ## Màu bằng lời
 
 ```yaml
 element_paint:
-  gold:   "warm honey gold with cream highlight"
-  red:    "soft cherry red with pink highlight"
-  blue:   "baby blue with white highlight"
-  green:  "fresh mint green with pale highlight"
-  purple: "soft lavender purple with lilac highlight"
-  pink:   "bubblegum pink with white highlight"
+  gold:   "gold and warm yellow"
+  red:    "bright red"
+  blue:   "bright sky blue"
+  green:  "bright green"
+  purple: "vivid purple"
+  pink:   "hot pink"
 
 element_color:
   gold:   "warm honey gold"

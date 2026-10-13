@@ -290,3 +290,36 @@ def _feather(mask: np.ndarray) -> np.ndarray:
     # ranh giới — icon sẽ teo đi một pixel dưới mắt bộ kiểm mà không ai thấy tại sao.
     out = np.where(mask, 1.0, cov)
     return np.clip(out * 255.0, 0, 255).astype(np.uint8)
+
+
+def ground_shadow(img: Image.Image, spec: dict) -> Image.Image:
+    """Bóng bầu dục mờ dưới chân chủ thể (`icon.ground_shadow`) — kiểu icon "đứng trên mặt đất".
+
+    Thu chủ thể lên một chút để có chỗ cho bóng; bóng rộng ~80% bề ngang chủ thể, nằm sát đáy.
+    """
+    cfg = (spec.get("icon") or {}).get("ground_shadow")
+    if not cfg:
+        return img
+    cfg = cfg if isinstance(cfg, dict) else {}
+    from PIL import ImageDraw, ImageFilter
+    a = np.array(img.convert("RGBA"))
+    ys, xs = np.nonzero(a[..., 3] >= 128)
+    if not len(xs):
+        return img
+    W, H = img.size
+    col = cfg.get("color", "#E8B98A")
+    rgb = tuple(int(col[i:i + 2], 16) for i in (1, 3, 5))
+    # chủ thể co lại 92% và dời lên để bóng không đè
+    sub = img.resize((round(W * 0.92), round(H * 0.92)), Image.LANCZOS)
+    out = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    bottom = int(ys.max() * 0.92) + round(H * 0.02)
+    cx = int((xs.min() + xs.max()) / 2 * 0.92) + round(W * 0.04)
+    rx = max(8, int((xs.max() - xs.min()) * 0.92 * cfg.get("width", 0.42)))
+    ry = max(4, int(H * cfg.get("height", 0.03)))
+    cy = min(H - ry - 2, bottom + ry // 2)
+    sh = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(sh).ellipse((cx - rx, cy - ry, cx + rx, cy + ry),
+                               fill=rgb + (int(255 * cfg.get("opacity", 0.45)),))
+    out.alpha_composite(sh.filter(ImageFilter.GaussianBlur(2)))
+    out.alpha_composite(sub, (round(W * 0.04), round(H * 0.0)))
+    return out
