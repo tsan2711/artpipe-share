@@ -1,0 +1,10 @@
+# Icon item / spell kiểu June (Skyborne). element: fire frost lightning arcane hostile environment.
+icons:
+  - { name: Gold,            prompt: "one shiny round gold coin, thick rim", element: environment }
+  - { name: Health Potion,   prompt: "one round glass potion flask with a cork, glowing liquid inside", element: fire }
+  - { name: Skysteel Ingot,  prompt: "one rectangular metal ingot bar with a pearly sheen" , element: frost }
+  - { name: Stormcaller Blade, prompt: "one ornate fantasy sword with a crackling blade" , element: lightning }
+  - { name: Ether Draught,   prompt: "one teardrop shaped glass vial with swirling liquid", element: arcane }
+  - { name: Firebolt,        subtype: projectile, element: fire }
+  - { name: Frost Lance,     subtype: beam,       element: frost }
+  - { name: Sealed Dispatch, prompt: "one rolled paper letter tied with a ribbon and a wax seal", element: fire }

@@ -1,0 +1,11 @@
+# Máy sinh cho preset này. generate.py tự tải model + dựng ComfyUI theo file này.
+checkpoint: animagine-xl-4.0-opt.safetensors
+workflow: icon_anime.json          # trong artpipe/workflows/
+gen_size: 1024                     # SDXL vẽ ở 1024 rồi thu về canvas 512
+stylise: false                     # NanoSwarm không vẽ thêm viền — nét mảnh màu của AI là phong cách
+variants: 3                        # số phương án mỗi icon (ghi đè bằng --variants)
+seed: 7000                         # seed gốc — cùng seed + cùng prompt = cùng ảnh
+downloads:                         # model cần có (bỏ qua nếu đã có)
+  - url: https://huggingface.co/cagliostrolab/animagine-xl-4.0/resolve/main/animagine-xl-4.0-opt.safetensors
+    dir: checkpoints
+# Giấy phép model: Animagine XL 4.0 = CreativeML OpenRAIL++-M (dùng thương mại được, kèm điều khoản sử dụng).

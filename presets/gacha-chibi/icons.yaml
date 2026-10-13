@@ -1,0 +1,11 @@
+# Đúng prompt của 12 Commander NanoSwarm Art B (gen_frontline_art.py CHARS hero-*), rút 8 cái.
+# Mẫu tả nhân vật: "<thân> + <màu thân> + <MỘT món nhận diện> + <biểu cảm> + <tư thế/đồ cầm>".
+icons:
+  - { name: Spark,   prompt: "a cute small robot hero, round head with a soft face screen, orange body, spiky lightning bolt hair tuft, cheeky wink, running pose, small arm cannon" }
+  - { name: Shell,   prompt: "a cute small robot hero, round head with a soft face screen, mint green body, a round turtle shell backpack, sleepy calm smile, holding a round shield" }
+  - { name: Orrin,   prompt: "a cute small robot hero, round head with a soft face screen, golden yellow body, small golden crown, proud grin, a short cape, raising a fist with a pulse glow" }
+  - { name: Clamp,   prompt: "a cute small robot hero, round head with a soft face screen, honey yellow body, a miner hard hat with a head lamp, happy open smile, carrying a small pickaxe on the shoulder" }
+  - { name: Hook,    prompt: "a cute small robot hero, round head with a soft face screen, sky blue body, a builder hard hat, focused cute face, holding a big wrench" }
+  - { name: Mira,    prompt: "a cute small robot hero, round head with a soft face screen, soft pink body, a big horseshoe magnet held up in both hands, cheerful sparkly eyes" }
+  - { name: Kite,    prompt: "a cute small robot hero, round head with a soft face screen, aqua teal body, flight goggles on the head and a long scarf blowing, energetic pose" }
+  - { name: Nyx,     prompt: "a cute small robot hero, round head with a soft face screen, deep violet body, a soft hood with cat ears, sly half-closed eyes, a wisp of purple smoke around one hand" }

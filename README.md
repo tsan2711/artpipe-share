@@ -3,13 +3,17 @@
 Viết danh sách icon bằng chữ → nhận về PNG nền trong, đã cắt nền, căn giữa, có viền, xuất sẵn nhiều cỡ +
 sprite sheet. Chạy trên GPU miễn phí của Google Colab hoặc Kaggle — **không cần cài gì, không cần token**.
 
-![kawaii-doodle](docs/samples/kawaii-doodle-preview-light.png)
+![kawaii-doodle](docs/samples/kawaii-doodle.png)
+![gacha-chibi](docs/samples/gacha-chibi.png)
+![pastel-rpg](docs/samples/pastel-rpg.png)
 
-*Ảnh trên: preset `kawaii-doodle`, sinh thật trên Colab T4 — chưa sửa tay pixel nào (xem [Nhật ký chạy thử](#nhật-ký-chạy-thử)).*
+*Mọi ảnh trên đều do AI vẽ, chưa sửa tay pixel nào. Nguồn từng bộ: [Bộ sưu tập](#bộ-sưu-tập).*
 
 | Preset | Ra cái gì | Model |
 |---|---|---|
-| **`kawaii-doodle`** ⭐ | icon "bánh bao" vẽ tay: viền nâu dày, màu phẳng, mặt chấm + má hồng, bóng dưới chân — **đã chạy thử, có ảnh mẫu** | Animagine XL 4.0 |
+| **`kawaii-doodle`** ⭐ | icon "bánh bao" vẽ tay: viền nâu dày, màu phẳng, mặt chấm + má hồng, bóng dưới chân | Animagine XL 4.0 |
+| **`gacha-chibi`** ⭐ | nhân vật chibi kiểu game gacha mobile — đúng câu lệnh của NanoSwarm | Animagine XL 4.0 |
+| **`pastel-rpg`** ⭐ | icon item / spell RPG pastel — đúng theme của June (Skyborne) | Animagine XL 4.0 |
 | `cute-icons` | icon item / tiền tệ / UI kiểu anime dễ thương | Animagine XL 4.0 |
 | `vector-icons` | icon kỹ năng / spell / buff vector phẳng, viền đậm | SDXL + LoRA DD-vector-v2 |
 | `chibi-sprites` | nhân vật / quái / pet chibi toàn thân | Animagine XL 4.0 |
@@ -115,7 +119,8 @@ jobs/*.json         file ý tưởng mẫu: preset + cài đặt + danh sách ic
 presets/<tên>/      art-direction.md (phong cách, bảng màu, luật chấm) · icons.yaml (danh sách) · preset.yaml (model)
 artpipe/            lõi pipeline: prompt, gọi ComfyUI, tách nền, ép viền, chấm điểm, trang duyệt
   workflows/        graph ComfyUI (API format)
-tools/              selftest.py · build_notebook.py · pack_atlas.py
+tools/              selftest.py · build_notebook.py · pack_atlas.py · make_gallery.py
+docs/samples/       ảnh mẫu của bộ sưu tập
 ```
 
 ## Sửa code / preset rồi đẩy lên
@@ -132,6 +137,21 @@ LoRA DD-vector-v2: huấn luyện trên ảnh CC0/public domain. Tự kiểm l�
 
 Gốc: tách từ `sanne-kit/Tools/artpipe` (làn icon) — bản này chạy độc lập, không cần sanne-kit / Unity / GitHub runner.
 
+## Bộ sưu tập
+
+| Bộ | Từ đâu | Cách làm | Preset để làm giống | Đã chạy trong repo này? |
+|---|---|---|---|---|
+| `kawaii-doodle` | repo này | Colab T4, 2026-10-13, vòng 4 (xem nhật ký dưới) | `kawaii-doodle` | ✅ có — ảnh trên chính là đầu ra |
+| `gacha-chibi` | game **NanoSwarm** — 12 Commander "Art B" | Animagine XL 4.0, txt2img, tách nền RMBG-2.0 (node ComfyUI), Bi chọn tay | `gacha-chibi` — **cùng** prefix/style/negative/prompt | ⚠️ chưa — khác duy nhất: repo dùng `rembg u2net` thay RMBG-2.0 |
+| `pastel-rpg` | game **June (Skyborne)** — 21 icon spell/item/modifier | artpipe gốc, theme `cute-pastel`, Animagine XL 4.0 | `pastel-rpg` — **cùng** prefix/style/negative/bảng màu, thêm `white background` | ⚠️ chưa — prompt từng icon viết lại cho repo này |
+
+Hai bộ ⚠️ là **ảnh thật đã dùng trong game**, sinh bằng đúng model + câu lệnh của preset tương ứng, nhưng chưa
+được sinh lại bằng chính repo này — kết quả của bạn sẽ cùng gu, không giống từng pixel. Chạy thử nhỏ trước
+(`ONLY`, `VARIANTS = 2`).
+
+Thêm bộ mới vào bộ sưu tập: chép PNG nền trong vào `docs/samples/<tên>/`, thêm 1 dòng vào `SETS` trong
+`tools/make_gallery.py`, chạy `python3 tools/make_gallery.py`.
+
 ## Nhật ký chạy thử
 
 Chạy thật trên **Google Colab free, GPU T4**, ngày 2026-10-13. Mỗi vòng = sinh → nhìn bằng mắt → sửa preset → chạy lại.
@@ -146,4 +166,4 @@ Chạy thật trên **Google Colab free, GPU T4**, ngày 2026-10-13. Mỗi vòng
 
 Bài học đã ghi vào [QUY-TRINH.md](QUY-TRINH.md): luôn ép **nền trắng trơn** trong prompt; **"tự chấm nhận" ≠ đẹp** (chỉ kiểm nền/viền/cỡ, không kiểm đúng vật) — luôn nhìn `sheet.html`; tả **hình cụ thể**, đừng tả "dễ thương/tròn mập" (preset lo); màu yếu thì dùng trọng số `(màu:1.3)`.
 
-Preset `vector-icons` và `chibi-sprites` **chưa chạy thật** — coi là bản nháp, chạy thử nhỏ (`ONLY`, `VARIANTS = 2`) trước khi dùng.
+Preset `vector-icons`, `chibi-sprites`, `gacha-chibi`, `pastel-rpg` **chưa chạy thật trong repo này** — coi là bản nháp, chạy thử nhỏ (`ONLY`, `VARIANTS = 2`) trước khi dùng.
